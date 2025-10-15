@@ -2,14 +2,11 @@ package org.firstinspires.ftc.teamcode.Main.Subsystems;
 
 // The basics
 
-import com.pedropathing.ftc.localization.RevHubIMU;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.ImuOrientationOnRobot;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -79,7 +76,7 @@ public class Drivebase {
             speedFactor = speedBool ? 0.5 : 1;
         }
 
-        // Reset Pos
+        // Reset Position
         if (gamepad.wasJustPressed(GamepadKeys.Button.Y)) {
             pinpoint.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 90));
         }
@@ -94,8 +91,8 @@ public class Drivebase {
         double rx   =  gamepad.getRightX() * speedFactor;
 
         // Rotate input vector by the negative heading
-        double rotX = x * Math.cos(-heading1) - y * Math.sin(-heading1);
-        double rotY = x * Math.sin(-heading1) + y * Math.cos(-heading1);
+        double rotX = (x * Math.cos(-heading1) + vertical) - (y * Math.sin(-heading1) + horizontal);
+        double rotY = (x * Math.sin(-heading1) + vertical) + (y * Math.cos(-heading1) + horizontal);
 
         // Calculate, normalize, multiply by speed factor, and send power to motors
         double denom = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
