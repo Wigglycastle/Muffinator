@@ -4,7 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 
-import org.firstinspires.ftc.teamcode.Main.Subsystems.Arm;
+import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
+import org.firstinspires.ftc.teamcode.Main.Subsystems.Climb;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.Drivebase;
 
 
@@ -25,7 +26,8 @@ public class MainTeleOp extends LinearOpMode {
 
         // Create the subsystems
         Drivebase Drivetrain = new Drivebase(hardwareMap);
-        Arm Arm = new Arm(hardwareMap);
+        ArtifactSystem ArtifactSystem = new ArtifactSystem(hardwareMap);
+        Climb Climb = new Climb(hardwareMap);
 
         // Configure telemetry
         telemetry.setMsTransmissionInterval(100);
@@ -36,13 +38,10 @@ public class MainTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             // Send gamepad inputs to the subsystems
             Drivetrain.ProcessInput(gamepadEx1);
-            Arm.ProcessInput(gamepadEx1);
+            ArtifactSystem.ProcessInput(gamepadEx2);
+            Climb.ProcessInput(gamepadEx2);
 
             // Create and send telemetry to robot
-            telemetry.addLine("Claw Degrees:" + Arm.getClawRot());
-            telemetry.addLine("Wrist Degrees:" + Arm.getWristRot());
-            telemetry.addLine("Arm Ticks:" + Arm.getArmRot());
-            telemetry.addLine("State:" + Arm.getState());
             if (Drivetrain.GetSlowMode()) {
                 telemetry.addLine("SLOW MODE ENABLED");
             }

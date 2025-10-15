@@ -2,9 +2,14 @@ package org.firstinspires.ftc.teamcode.Main.Subsystems;
 
 // The basics
 
+import com.pedropathing.ftc.localization.RevHubIMU;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.ImuOrientationOnRobot;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -21,8 +26,12 @@ public class Drivebase {
 
     private boolean speedBool;
 
+
     private final GoBildaPinpointDriver pinpoint;
+    private final IMU imu;
     double speedFactor = 1;
+    public double heading1;
+    public double heading2;
 
     public Drivebase(HardwareMap hardwareMap) {
 
@@ -31,6 +40,12 @@ public class Drivebase {
         pinpoint.recalibrateIMU();
         //TODO: Get heading data from end of auto, set to temp value
         pinpoint.setHeading(90, AngleUnit.DEGREES);
+        imu = hardwareMap.get(IMU.class, "imu");
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+        RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.UP;
+        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
+        imu.initialize(new IMU.Parameters(orientationOnRobot));
+        imu.resetYaw();
 
         // Define motors
         leftFrontDrive  = hardwareMap.get(DcMotor.class, "leftFront");
@@ -39,28 +54,29 @@ public class Drivebase {
         rightBackDrive = hardwareMap.get(DcMotor.class, "rightBack");
 
         // Set Motor Directions
+        // Set Motor Directions
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
 
+        // Set Motor Behavior
+        leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     public void ProcessInput(GamepadEx gamepad) {
 
         // Get heading data from pinpoint
         pinpoint.update();
-        double heading = pinpoint.getHeading(AngleUnit.RADIANS);
+        heading1 = pinpoint.getHeading(AngleUnit.RADIANS);
+        heading2 = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
         // Set speed factor, when A is pressed the robot goes into a fine adjustment mode, on a toggle
-        if(gamepad.wasJustPressed(GamepadKeys.Button.A)) {
-            if (speedBool) {
-                speedBool = false;
-                speedFactor = 1;
-            }
-            else {
-                speedBool = true;
-                speedFactor = 0.5;
-            }
+        if (gamepad.wasJustPressed(GamepadKeys.Button.A)) {
+            speedBool = !speedBool;
+            speedFactor = speedBool ? 0.5 : 1;
         }
 
         // Reset Pos
@@ -68,14 +84,18 @@ public class Drivebase {
             pinpoint.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 90));
         }
 
-        // Grab inputs from the Gamepad and apply speed factor
+        // This is for crab crawl
+        double vertical = gamepad.getButton(GamepadKeys.Button.DPAD_UP) ? 0.4 : (gamepad.getButton(GamepadKeys.Button.DPAD_DOWN) ? -0.4 : 0);
+        double horizontal = gamepad.getButton(GamepadKeys.Button.DPAD_LEFT) ? 0.4 : (gamepad.getButton(GamepadKeys.Button.DPAD_RIGHT) ? -0.4 : 0);
+
+        // Rotate input vector by the negative heading and apply speed factor
         double x    =  -gamepad.getLeftY() * speedFactor;
         double y    =  gamepad.getLeftX() * speedFactor;
         double rx   =  gamepad.getRightX() * speedFactor;
 
         // Rotate input vector by the negative heading
-        double rotX = x * Math.cos(-heading) - y * Math.sin(-heading);
-        double rotY = x * Math.sin(-heading) + y * Math.cos(-heading);
+        double rotX = x * Math.cos(-heading1) - y * Math.sin(-heading1);
+        double rotY = x * Math.sin(-heading1) + y * Math.cos(-heading1);
 
         // Calculate, normalize, multiply by speed factor, and send power to motors
         double denom = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
@@ -86,5 +106,11 @@ public class Drivebase {
         }
         public boolean GetSlowMode() {
         return speedBool;
+        }
+        public double GetHeading1() {
+        return heading1;
+        }
+        public double GetHeading2() {
+        return heading2;
         }
     }
