@@ -24,7 +24,7 @@ public class Drivebase {
     private final DcMotor rightFrontDrive;
     private final DcMotor rightBackDrive;
 
-    private boolean speedBool;
+    public boolean speedBool;
 
 
     private final GoBildaPinpointDriver pinpoint;
@@ -103,14 +103,5 @@ public class Drivebase {
         leftBackDrive.setPower(( rotY - rotX + rx) / denom);
         rightFrontDrive.setPower(( rotY - rotX - rx) / denom);
         rightBackDrive.setPower(( rotY + rotX - rx) / denom);
-        }
-        public boolean GetSlowMode() {
-        return speedBool;
-        }
-        public double GetHeading1() {
-        return heading1;
-        }
-        public double GetHeading2() {
-        return heading2;
         }
     }

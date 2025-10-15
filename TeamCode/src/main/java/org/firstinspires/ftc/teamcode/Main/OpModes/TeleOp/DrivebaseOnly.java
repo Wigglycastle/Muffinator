@@ -50,7 +50,7 @@ public class DrivebaseOnly extends LinearOpMode {
             Drivebase.ProcessInput(gamepadEx1);
 
             // Create and send telemetry to robot
-            if (Drivebase.GetSlowMode()) {
+            if (Drivebase.speedBool) {
                 telemetry.addLine("SLOW MODE ENABLED");
             }
             telemetry.addLine("Heading Pinpoint:" + Drivebase.heading1);
