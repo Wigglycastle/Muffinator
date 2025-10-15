@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Main.OpModes.TeleOp;
 
+import com.bylazar.telemetry.PanelsTelemetry;
+import com.bylazar.telemetry.TelemetryManager;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
@@ -25,8 +27,11 @@ public class MainTeleOp extends LinearOpMode {
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
 
+        // Create telemetry
+        TelemetryManager panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
+
         // Create the subsystems
-        Drivebase Drivetrain = new Drivebase(hardwareMap);
+        Drivebase Drivebase = new Drivebase(hardwareMap);
         ArtifactSystem ArtifactSystem = new ArtifactSystem(hardwareMap);
         Climb Climb = new Climb(hardwareMap);
         LightingSystem LightingSystem = new LightingSystem(hardwareMap);
@@ -45,16 +50,21 @@ public class MainTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
             // Send gamepad inputs to the subsystems
-            Drivetrain.ProcessInput(gamepadEx1);
+            Drivebase.ProcessInput(gamepadEx1);
             ArtifactSystem.ProcessInput(gamepadEx2);
             Climb.ProcessInput(gamepadEx2);
 
             // Create and send telemetry to robot
-            if (Drivetrain.speedBool) {
+            if (Drivebase.speedBool) {
                 telemetry.addLine("SLOW MODE ENABLED");
             }
-            telemetry.update();
-
+            telemetry.addLine("Heading Pinpoint:" + Drivebase.heading1);
+            telemetry.addLine("Heading IMU:" + Drivebase.heading2);
+            // Add panels telemetry
+            panelsTelemetry.addData("Pinpoint Heading", Drivebase.heading1);
+            panelsTelemetry.addData("REV IMU Heading", Drivebase.heading2);
+            // Update telemetry
+            panelsTelemetry.update(telemetry);
         }
     }
 }
