@@ -26,7 +26,8 @@ public class Drivebase {
 
     private final GoBildaPinpointDriver pinpoint;
     private final IMU imu;
-    double speedFactor = 1;
+    private double speedFactor = 1;
+    private double crabSpeedFactor;
     public double heading1;
     public double heading2;
 
@@ -62,6 +63,9 @@ public class Drivebase {
         rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        // Set crab crawl speed (Add adjustment later on?)
+        crabSpeedFactor = 0.4;
     }
     public void ProcessInput(GamepadEx gamepad) {
 
@@ -82,8 +86,8 @@ public class Drivebase {
         }
 
         // This is for crab crawl
-        double vertical = gamepad.getButton(GamepadKeys.Button.DPAD_UP) ? 0.4 : (gamepad.getButton(GamepadKeys.Button.DPAD_DOWN) ? -0.4 : 0);
-        double horizontal = gamepad.getButton(GamepadKeys.Button.DPAD_LEFT) ? 0.4 : (gamepad.getButton(GamepadKeys.Button.DPAD_RIGHT) ? -0.4 : 0);
+        double vertical = gamepad.getButton(GamepadKeys.Button.DPAD_UP) ? crabSpeedFactor : (gamepad.getButton(GamepadKeys.Button.DPAD_DOWN) ? -crabSpeedFactor : 0);
+        double horizontal = gamepad.getButton(GamepadKeys.Button.DPAD_LEFT) ? crabSpeedFactor : (gamepad.getButton(GamepadKeys.Button.DPAD_RIGHT) ? -crabSpeedFactor : 0);
 
         // Rotate input vector by the negative heading and apply speed factor
         double x    =  -gamepad.getLeftY() * speedFactor;
@@ -91,8 +95,8 @@ public class Drivebase {
         double rx   =  gamepad.getRightX() * speedFactor;
 
         // Rotate input vector by the negative heading
-        double rotX = x * Math.cos(-heading1) - y * Math.sin(-heading1) + (vertical - horizontal);
-        double rotY = x * Math.sin(-heading1) + y * Math.cos(-heading1) + (vertical + horizontal);
+        double rotX = x * Math.cos(-heading1) - y * Math.sin(-heading1) - horizontal;
+        double rotY = x * Math.sin(-heading1) + y * Math.cos(-heading1) + vertical;
 
         // Calculate, normalize, multiply by speed factor, and send power to motors
         double denom = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
