@@ -68,7 +68,7 @@ public class Drivebase {
         // Get heading data from pinpoint
         pinpoint.update();
         heading1 = pinpoint.getHeading(AngleUnit.RADIANS);
-        heading2 = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+        heading2 = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) + Math.toRadians(90);
 
         // Set speed factor, when A is pressed the robot goes into a fine adjustment mode, on a toggle
         if (gamepad.wasJustPressed(GamepadKeys.Button.A)) {
@@ -91,8 +91,8 @@ public class Drivebase {
         double rx   =  gamepad.getRightX() * speedFactor;
 
         // Rotate input vector by the negative heading
-        double rotX = (x * Math.cos(-heading1) + vertical) - (y * Math.sin(-heading1) + horizontal);
-        double rotY = (x * Math.sin(-heading1) + vertical) + (y * Math.cos(-heading1) + horizontal);
+        double rotX = x * Math.cos(-heading1) - y * Math.sin(-heading1) + (vertical - horizontal);
+        double rotY = x * Math.sin(-heading1) + y * Math.cos(-heading1) + (vertical + horizontal);
 
         // Calculate, normalize, multiply by speed factor, and send power to motors
         double denom = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);

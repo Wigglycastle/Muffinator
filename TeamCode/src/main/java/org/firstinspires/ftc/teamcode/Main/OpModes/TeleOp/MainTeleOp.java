@@ -48,13 +48,16 @@ public class MainTeleOp extends LinearOpMode {
         // Change Lights
         LightingSystem.MidGameLights();
 
+        // Enable Climb Movement
+        Climb.EnableMotors();
+
         while (opModeIsActive()) {
             // Send gamepad inputs to the subsystems
             Drivebase.ProcessInput(gamepadEx1);
             ArtifactSystem.ProcessInput(gamepadEx2);
             Climb.ProcessInput(gamepadEx2);
 
-            // Create and send telemetry to robot
+            // Create telemetry
             if (Drivebase.speedBool) {
                 telemetry.addLine("SLOW MODE ENABLED");
             }
@@ -63,6 +66,7 @@ public class MainTeleOp extends LinearOpMode {
             // Add panels telemetry
             panelsTelemetry.addData("Pinpoint Heading", Drivebase.heading1);
             panelsTelemetry.addData("REV IMU Heading", Drivebase.heading2);
+
             // Update telemetry
             panelsTelemetry.update(telemetry);
         }

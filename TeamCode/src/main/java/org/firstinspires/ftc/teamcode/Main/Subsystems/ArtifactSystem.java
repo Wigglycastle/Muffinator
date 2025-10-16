@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Main.Subsystems;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
+import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import com.seattlesolvers.solverslib.hardware.ServoEx;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 
@@ -11,6 +12,8 @@ public class ArtifactSystem {
     private final Motor IndexerMotor;
     private final ServoEx LeftIndex;
     private final ServoEx RightIndex;
+
+    
 
     public ArtifactSystem(HardwareMap hardwareMap) {
         // Initialize Motors
@@ -24,6 +27,7 @@ public class ArtifactSystem {
     }
 
     public void ProcessInput(GamepadEx gamepad) {
+
 
 
     }

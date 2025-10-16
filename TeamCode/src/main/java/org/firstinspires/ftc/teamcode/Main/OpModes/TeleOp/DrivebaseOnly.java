@@ -40,15 +40,14 @@ public class DrivebaseOnly extends LinearOpMode {
             // Send gamepad inputs to the subsystems
             Drivebase.ProcessInput(gamepadEx1);
 
-            // Create and send telemetry to robot
+            // Create telemetry
             if (Drivebase.speedBool) {
-                telemetry.addLine("SLOW MODE ENABLED");
+                panelsTelemetry.addLine("SLOW MODE ENABLED");
             }
-            telemetry.addLine("Heading Pinpoint:" + Drivebase.heading1);
-            telemetry.addLine("Heading IMU:" + Drivebase.heading2);
             // Add panels telemetry
             panelsTelemetry.addData("Pinpoint Heading", Drivebase.heading1);
             panelsTelemetry.addData("REV IMU Heading", Drivebase.heading2);
+
             // Update telemetry
             panelsTelemetry.update(telemetry);
         }
