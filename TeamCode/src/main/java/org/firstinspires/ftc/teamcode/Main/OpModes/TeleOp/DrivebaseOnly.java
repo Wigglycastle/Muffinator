@@ -26,15 +26,15 @@ public class DrivebaseOnly extends LinearOpMode {
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
 
-        // Create telemetry
-        TelemetryManager panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
-
         // Create the subsystems
         Drivebase Drivebase = new Drivebase(hardwareMap);
-        AprilSystem AprilSystem = new AprilSystem(hardwareMap);
+        AprilSystem AprilSystem = new AprilSystem(hardwareMap, telemetry);
 
         // Configure telemetry
         telemetry.setMsTransmissionInterval(100);
+
+        // Create telemetry manager
+        TelemetryManager panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
 
         // Go time
         waitForStart();

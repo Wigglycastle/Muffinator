@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
@@ -40,8 +42,10 @@ public class AprilSystem {
     public double frontRightPower;
     public double backLeftPower;
     public double backRightPower;
+    private final Telemetry telemetry;
 
-    public AprilSystem(HardwareMap hardwareMap) {
+    public AprilSystem(HardwareMap hardwareMap, Telemetry telemetry) {
+        this.telemetry = telemetry;
         // Create the AprilTag processor by using a builder.
         aprilTag = new AprilTagProcessor.Builder().build();
 
@@ -89,25 +93,23 @@ public class AprilSystem {
                         break;  // don't look any further.
                     } else {
                         // This tag is in the library, but we do not want to track it right now.
-                       // telemetry.addData("Skipping", "Tag ID %d is not desired", detection.id);
+                       telemetry.addData("Skipping", "Tag ID %d is not desired", detection.id);
                     }
                 } else {
                     // This tag is NOT in the library, so we don't have enough information to track to it.
-                   // telemetry.addData("Unknown", "Tag ID %d is not in TagLibrary", detection.id);
+                   telemetry.addData("Unknown", "Tag ID %d is not in TagLibrary", detection.id);
                 }
             }
 
             // Tell the driver what we see, and what to do.
             if (targetFound) {
-                /*
                 telemetry.addData("\n>","HOLD Left-Bumper to Drive to Target\n");
                 telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
                 telemetry.addData("Range",  "%5.1f inches", desiredTag.ftcPose.range);
                 telemetry.addData("Bearing","%3.0f degrees", desiredTag.ftcPose.bearing);
                 telemetry.addData("Yaw","%3.0f degrees", desiredTag.ftcPose.yaw);
-                */
             } else {
-                // telemetry.addData("\n>","Drive using joysticks to find valid target\n");
+                telemetry.addData("\n>","Drive using joysticks to find valid target\n");
             }
 
             // If Left Bumper is being pressed, AND we have found the desired target, Drive to target Automatically .
@@ -123,14 +125,13 @@ public class AprilSystem {
                 turn   = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN) ;
                 strafe = Range.clip(-yawError * STRAFE_GAIN, -MAX_AUTO_STRAFE, MAX_AUTO_STRAFE);
 
-                // telemetry.addData("Auto","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
+                telemetry.addData("Auto","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
             } else {
                 backLeftPower = 0;
                 frontLeftPower = 0;
                 backRightPower = 0;
                 frontRightPower = 0;
             }
-            // telemetry.update();
 
             // Calculate wheel powers.
             frontLeftPower    =  drive - strafe - turn;

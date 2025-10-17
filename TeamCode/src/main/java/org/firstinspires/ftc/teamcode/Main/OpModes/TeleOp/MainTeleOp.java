@@ -36,7 +36,7 @@ public class MainTeleOp extends LinearOpMode {
         ArtifactSystem ArtifactSystem = new ArtifactSystem(hardwareMap);
         Climb Climb = new Climb(hardwareMap);
         LightingSystem LightingSystem = new LightingSystem(hardwareMap);
-        AprilSystem AprilSystem = new AprilSystem(hardwareMap);
+        AprilSystem AprilSystem = new AprilSystem(hardwareMap, telemetry);
 
         // Configure telemetry
         telemetry.setMsTransmissionInterval(100);
