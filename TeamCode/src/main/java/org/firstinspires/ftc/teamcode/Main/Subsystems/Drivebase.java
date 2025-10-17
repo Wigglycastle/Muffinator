@@ -70,8 +70,13 @@ public class Drivebase {
     public void ProcessInput(GamepadEx gamepad, AprilSystem aprilSystem) {
 
         if(gamepad.getButton(GamepadKeys.Button.RIGHT_BUMPER)) {
-            aprilSystem.CheckForTag();
+            aprilSystem.CheckForTag(36, -1);
         }
+
+        if(gamepad.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
+            aprilSystem.CheckForTag(60, -1);
+        }
+
         else {
             aprilSystem.backLeftPower = 0;
             aprilSystem.frontLeftPower = 0;
