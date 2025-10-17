@@ -67,12 +67,22 @@ public class Drivebase {
         // Set crab crawl speed (Add adjustment later on?)
         crabSpeedFactor = 0.4;
     }
-    public void ProcessInput(GamepadEx gamepad) {
+    public void ProcessInput(GamepadEx gamepad, AprilSystem aprilSystem) {
+
+        if(gamepad.getButton(GamepadKeys.Button.RIGHT_BUMPER)) {
+            aprilSystem.CheckForTag();
+        }
+        else {
+            aprilSystem.backLeftPower = 0;
+            aprilSystem.frontLeftPower = 0;
+            aprilSystem.backRightPower = 0;
+            aprilSystem.frontRightPower = 0;
+        }
 
         // Get heading data from pinpoint
         pinpoint.update();
         heading1 = pinpoint.getHeading(AngleUnit.RADIANS);
-        heading2 = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) + Math.toRadians(90);
+        heading2 = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
         // Set speed factor, when A is pressed the robot goes into a fine adjustment mode, on a toggle
         if (gamepad.wasJustPressed(GamepadKeys.Button.A)) {
@@ -100,9 +110,9 @@ public class Drivebase {
 
         // Calculate, normalize, multiply by speed factor, and send power to motors
         double denom = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-        leftFrontDrive.setPower(( rotY + rotX + rx) / denom);
-        leftBackDrive.setPower(( rotY - rotX + rx) / denom);
-        rightFrontDrive.setPower(( rotY - rotX - rx) / denom);
-        rightBackDrive.setPower(( rotY + rotX - rx) / denom);
+        leftFrontDrive.setPower(( rotY + rotX + rx) / denom + aprilSystem.frontLeftPower);
+        leftBackDrive.setPower(( rotY - rotX + rx) / denom + aprilSystem.backLeftPower);
+        rightFrontDrive.setPower(( rotY - rotX - rx) / denom + aprilSystem.frontRightPower);
+        rightBackDrive.setPower(( rotY + rotX - rx) / denom + aprilSystem.backRightPower);
         }
     }

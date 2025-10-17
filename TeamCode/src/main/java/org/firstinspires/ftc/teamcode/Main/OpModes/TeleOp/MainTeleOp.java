@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 
+import org.firstinspires.ftc.teamcode.Main.Subsystems.AprilSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.Climb;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.Drivebase;
@@ -35,6 +36,7 @@ public class MainTeleOp extends LinearOpMode {
         ArtifactSystem ArtifactSystem = new ArtifactSystem(hardwareMap);
         Climb Climb = new Climb(hardwareMap);
         LightingSystem LightingSystem = new LightingSystem(hardwareMap);
+        AprilSystem AprilSystem = new AprilSystem(hardwareMap);
 
         // Configure telemetry
         telemetry.setMsTransmissionInterval(100);
@@ -53,7 +55,7 @@ public class MainTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
             // Send gamepad inputs to the subsystems
-            Drivebase.ProcessInput(gamepadEx1);
+            Drivebase.ProcessInput(gamepadEx1, AprilSystem);
             ArtifactSystem.ProcessInput(gamepadEx2);
             Climb.ProcessInput(gamepadEx2);
 

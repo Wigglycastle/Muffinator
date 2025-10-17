@@ -5,6 +5,8 @@ import com.bylazar.telemetry.TelemetryManager;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
+
+import org.firstinspires.ftc.teamcode.Main.Subsystems.AprilSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.Drivebase;
 
 
@@ -29,6 +31,7 @@ public class DrivebaseOnly extends LinearOpMode {
 
         // Create the subsystems
         Drivebase Drivebase = new Drivebase(hardwareMap);
+        AprilSystem AprilSystem = new AprilSystem(hardwareMap);
 
         // Configure telemetry
         telemetry.setMsTransmissionInterval(100);
@@ -38,7 +41,7 @@ public class DrivebaseOnly extends LinearOpMode {
 
         while (opModeIsActive()) {
             // Send gamepad inputs to the subsystems
-            Drivebase.ProcessInput(gamepadEx1);
+            Drivebase.ProcessInput(gamepadEx1, AprilSystem);
 
             // Create telemetry
             if (Drivebase.speedBool) {
