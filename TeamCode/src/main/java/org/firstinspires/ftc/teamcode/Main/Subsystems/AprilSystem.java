@@ -11,6 +11,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class AprilSystem {
@@ -55,8 +56,8 @@ public class AprilSystem {
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .addProcessor(aprilTag)
                 .build();
-
-        setManualExposure(6, 250);  // Use low exposure time to reduce motion blur
+        //TODO: Figure out exposure
+        setManualExposure(2, 150);  // Use low exposure time to reduce motion blur
     }
 
     public void CheckForTag(double desiredDistance, double desiredTagID) {
@@ -87,7 +88,6 @@ public class AprilSystem {
 
             // Tell the driver what we see, and what to do.
             if (targetFound) {
-                telemetry.addData("\n>","HOLD Left-Bumper to Drive to Target\n");
                 telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
                 telemetry.addData("Range",  "%5.1f inches", desiredTag.ftcPose.range);
                 telemetry.addData("Bearing","%3.0f degrees", desiredTag.ftcPose.bearing);
@@ -153,11 +153,29 @@ public class AprilSystem {
                 exposureControl.setMode(ExposureControl.Mode.Manual);
                 sleep(50);
             }
-            exposureControl.setExposure((long)exposureMS, TimeUnit.MILLISECONDS);
+            exposureControl.setExposure(exposureMS, TimeUnit.MILLISECONDS);
             sleep(20);
             GainControl gainControl = visionPortal.getCameraControl(GainControl.class);
             gainControl.setGain(gain);
             sleep(20);
+    }
+
+    public int readTag() {
+        List<AprilTagDetection> detections = aprilTag.getDetections();
+        if (detections == null || detections.isEmpty()) {
+            return -1; // No detections
+        }
+
+        // Tags to look for
+        Set<Integer> validIds = Set.of(21, 22, 23);
+
+        for (AprilTagDetection detection : detections) {
+            if (detection.metadata != null && validIds.contains(detection.id)) {
+                return detection.id; // Return the tag
+            }
+        }
+
+        return -1; // No matching tag found
     }
 }
 

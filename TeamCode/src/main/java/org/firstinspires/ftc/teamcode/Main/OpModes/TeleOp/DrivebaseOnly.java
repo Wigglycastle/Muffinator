@@ -40,6 +40,10 @@ public class DrivebaseOnly extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            // Read controllers
+            gamepadEx1.readButtons();
+            gamepadEx2.readButtons();
+
             // Send gamepad inputs to the subsystems
             Drivebase.ProcessInput(gamepadEx1, AprilSystem);
 

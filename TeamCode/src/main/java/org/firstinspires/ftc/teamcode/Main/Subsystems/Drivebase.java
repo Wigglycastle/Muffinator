@@ -68,15 +68,12 @@ public class Drivebase {
         crabSpeedFactor = 0.4;
     }
     public void ProcessInput(GamepadEx gamepad, AprilSystem aprilSystem) {
-
         if(gamepad.getButton(GamepadKeys.Button.RIGHT_BUMPER)) {
-            aprilSystem.CheckForTag(36, -1);
+            aprilSystem.CheckForTag(90, -1);
         }
-
-        if(gamepad.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
+        else if(gamepad.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
             aprilSystem.CheckForTag(60, -1);
         }
-
         else {
             aprilSystem.backLeftPower = 0;
             aprilSystem.frontLeftPower = 0;
@@ -90,15 +87,14 @@ public class Drivebase {
         heading2 = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
         // Set speed factor, when A is pressed the robot goes into a fine adjustment mode, on a toggle
-        if (gamepad.wasJustReleased(GamepadKeys.Button.A)) {
+        if (gamepad.wasJustPressed(GamepadKeys.Button.A)) {
             speedBool = !speedBool;
             speedFactor = speedBool ? 0.5 : 1;
         }
 
         // Reset Position
-        if (gamepad.wasJustReleased(GamepadKeys.Button.Y)) {
-            //pinpoint.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 90));
-            pinpoint.resetPosAndIMU();
+        if (gamepad.wasJustPressed(GamepadKeys.Button.Y)) {
+            pinpoint.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 90));
         }
 
         // This is for crab crawl

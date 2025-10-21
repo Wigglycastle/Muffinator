@@ -54,6 +54,10 @@ public class MainTeleOp extends LinearOpMode {
         Climb.EnableMotors();
 
         while (opModeIsActive()) {
+            // Read controllers
+            gamepadEx1.readButtons();
+            gamepadEx2.readButtons();
+
             // Send gamepad inputs to the subsystems
             Drivebase.ProcessInput(gamepadEx1, AprilSystem);
             ArtifactSystem.ProcessInput(gamepadEx2);
