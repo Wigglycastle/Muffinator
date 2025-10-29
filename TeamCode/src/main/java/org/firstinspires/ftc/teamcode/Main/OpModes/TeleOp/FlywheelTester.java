@@ -27,8 +27,8 @@ public class FlywheelTester extends LinearOpMode {
         MotorEx flywheelMotor = new MotorEx(hardwareMap, "FlwM");
         flywheelMotor.setRunMode(Motor.RunMode.VelocityControl);
         flywheelMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.FLOAT);
-        flywheelMotor.setVeloCoefficients(0.05, 0.0, 0.002);
-        flywheelMotor.setFeedforwardCoefficients(0.1, 0.00018, 0.0);
+        flywheelMotor.setVeloCoefficients(0.25, 0.002, 0.01);
+        flywheelMotor.setFeedforwardCoefficients(0.1, 0.0005, 0.0);
         Motor.Encoder encoder = flywheelMotor.encoder;
 
         encoder.reset();
