@@ -20,10 +20,13 @@ public class AprilSystem {
     //  Drive = Error * Gain    Make these values smaller for smoother control, or larger for a more aggressive response.
     final double SPEED_GAIN  =  0.025  ;   //  Forward Speed Control "Gain". e.g. Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
     final double STRAFE_GAIN =  0.02 ;   //  Strafe Speed Control "Gain".  e.g. Ramp up to 37% power at a 25 degree Yaw error.   (0.375 / 25.0)
-    final double TURN_GAIN   =  0.015  ;   //  Turn Control "Gain".  e.g. Ramp up to 25% power at a 25 degree error. (0.25 / 25.0)
+    final double TURN_GAIN   =  0.0125  ;   //  Turn Control "Gain".  e.g. Ramp up to 25% power at a 25 degree error. (0.25 / 25.0)
     final double MAX_AUTO_SPEED = 1;
     final double MAX_AUTO_STRAFE= 1;
     final double MAX_AUTO_TURN  = 0.75;
+    // Camera calibration
+    private final int exposureMS = 2;   // Use low exposure time to reduce motion blur
+    private final int gain = 400;
     VisionPortal visionPortal;               // Used to manage the video source.
     AprilTagProcessor aprilTag;              // Used for managing the AprilTag detection process.
     AprilTagDetection desiredTag = null;     // Used to hold the data for a detected AprilTag
@@ -57,10 +60,21 @@ public class AprilSystem {
                 .addProcessor(aprilTag)
                 .build();
         //TODO: Figure out exposure
-        setManualExposure(2, 150);  // Use low exposure time to reduce motion blur
+        setManualExposure(exposureMS, gain);  // Use low exposure time to reduce motion blur
     }
 
     public void CheckForTag(double desiredDistance, double desiredTagID) {
+
+        if (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
+            telemetry.addData("Camera", "Not streaming. Check connection.");
+            // Set motors to 0
+            backLeftPower = 0;
+            frontLeftPower = 0;
+            backRightPower = 0;
+            frontRightPower = 0;
+            targetFound = false;
+            return; // Exit the method early
+        }
 
             targetFound = false;
             desiredTag  = null;
@@ -136,28 +150,44 @@ public class AprilSystem {
 
     private void setManualExposure(int exposureMS, int gain) {
         // Wait for the camera to be open, then use the controls
-
         if (visionPortal == null) {
             return;
         }
 
-        // Make sure camera is streaming before we try to set the exposure controls
-        if (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
-            while ((visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING)) {
-                sleep(20);
+        // Define a timeout period
+        final long TIMEOUT_MS = 2000; // 2 seconds
+        long startTime = System.currentTimeMillis();
+
+        // Wait for the camera to be streaming, but with a timeout and error check
+        while ((visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) &&
+                (System.currentTimeMillis() - startTime < TIMEOUT_MS)) {
+
+            // Check if the camera has encountered an error
+            if (visionPortal.getCameraState() == VisionPortal.CameraState.ERROR) {
+                telemetry.addData("Camera Error", "Camera failed to initialize!");
+                return; // Give up immediately on error
             }
+            sleep(20);
         }
 
+        // After the loop, check if we are *actually* streaming
+        if (visionPortal.getCameraState() == VisionPortal.CameraState.STREAMING) {
+            // Camera is streaming, now we can safely set controls
             ExposureControl exposureControl = visionPortal.getCameraControl(ExposureControl.class);
             if (exposureControl.getMode() != ExposureControl.Mode.Manual) {
                 exposureControl.setMode(ExposureControl.Mode.Manual);
-                sleep(50);
+                sleep(50); // Wait for mode to switch
             }
             exposureControl.setExposure(exposureMS, TimeUnit.MILLISECONDS);
             sleep(20);
             GainControl gainControl = visionPortal.getCameraControl(GainControl.class);
             gainControl.setGain(gain);
             sleep(20);
+            telemetry.addData("Camera", "Manual exposure set");
+        } else {
+            // We timed out waiting for the camera
+            telemetry.addData("Camera Warning", "TIMEOUT waiting for camera to start streaming");
+        }
     }
 
     public int readTag() {

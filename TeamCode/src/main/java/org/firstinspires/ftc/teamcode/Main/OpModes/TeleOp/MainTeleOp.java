@@ -8,9 +8,8 @@ import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 
 import org.firstinspires.ftc.teamcode.Main.Subsystems.AprilSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
-import org.firstinspires.ftc.teamcode.Main.Subsystems.Climb;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.Drivebase;
-import org.firstinspires.ftc.teamcode.Main.Subsystems.LightingSystem;
+
 
 
 @TeleOp(name="Main TeleOp", group="Linear OpMode")
@@ -34,24 +33,24 @@ public class MainTeleOp extends LinearOpMode {
         // Create the subsystems
         Drivebase Drivebase = new Drivebase(hardwareMap);
         ArtifactSystem ArtifactSystem = new ArtifactSystem(hardwareMap);
-        Climb Climb = new Climb(hardwareMap);
-        LightingSystem LightingSystem = new LightingSystem(hardwareMap);
+        //Climb Climb = new Climb(hardwareMap);
+        //LightingSystem LightingSystem = new LightingSystem(hardwareMap);
         AprilSystem AprilSystem = new AprilSystem(hardwareMap, telemetry);
 
         // Configure telemetry
         telemetry.setMsTransmissionInterval(100);
 
         // Start Lights
-        LightingSystem.PreGameLights();
+        //LightingSystem.PreGameLights();
 
         // Go time
         waitForStart();
 
         // Change Lights
-        LightingSystem.MidGameLights();
+        //LightingSystem.MidGameLights();
 
         // Enable Climb Movement
-        Climb.EnableMotors();
+        //Climb.EnableMotors();
 
         while (opModeIsActive()) {
             // Read controllers
@@ -60,8 +59,8 @@ public class MainTeleOp extends LinearOpMode {
 
             // Send gamepad inputs to the subsystems
             Drivebase.ProcessInput(gamepadEx1, AprilSystem);
-            ArtifactSystem.ProcessInput(gamepadEx2);
-            Climb.ProcessInput(gamepadEx2);
+            ArtifactSystem.ProcessInput(gamepadEx1);
+            //Climb.ProcessInput(gamepadEx2);
 
             // Create telemetry
             if (Drivebase.speedBool) {

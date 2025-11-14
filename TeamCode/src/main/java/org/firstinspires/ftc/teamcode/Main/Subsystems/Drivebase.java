@@ -68,11 +68,11 @@ public class Drivebase {
         crabSpeedFactor = 0.4;
     }
     public void ProcessInput(GamepadEx gamepad, AprilSystem aprilSystem) {
-        if(gamepad.getButton(GamepadKeys.Button.RIGHT_BUMPER)) {
-            aprilSystem.CheckForTag(90, -1);
-        }
-        else if(gamepad.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
+        if(gamepad.getButton(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
             aprilSystem.CheckForTag(60, -1);
+        }
+        else if(gamepad.getButton(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
+            aprilSystem.CheckForTag(30, -1);
         }
         else {
             aprilSystem.backLeftPower = 0;
@@ -98,8 +98,10 @@ public class Drivebase {
         }
 
         // This is for crab crawl
-        double vertical = gamepad.getButton(GamepadKeys.Button.DPAD_UP) ? crabSpeedFactor : (gamepad.getButton(GamepadKeys.Button.DPAD_DOWN) ? -crabSpeedFactor : 0);
-        double horizontal = gamepad.getButton(GamepadKeys.Button.DPAD_LEFT) ? crabSpeedFactor : (gamepad.getButton(GamepadKeys.Button.DPAD_RIGHT) ? -crabSpeedFactor : 0);
+        double vertical = gamepad.getButton(GamepadKeys.Button.DPAD_UP) ? crabSpeedFactor :
+                (gamepad.getButton(GamepadKeys.Button.DPAD_DOWN) ? -crabSpeedFactor : 0);
+        double horizontal = gamepad.getButton(GamepadKeys.Button.DPAD_LEFT) ? crabSpeedFactor :
+                (gamepad.getButton(GamepadKeys.Button.DPAD_RIGHT) ? -crabSpeedFactor : 0);
 
         // Rotate input vector by the negative heading and apply speed factor
         double x    =  -gamepad.getLeftY() * speedFactor;
