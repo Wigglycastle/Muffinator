@@ -72,4 +72,19 @@ public class ArtifactSystem {
         IntakeMotor.set(intakePower);
         IndexerMotor.set(indexPower);
     }
+    public void FlywheelPowerTo(double Power) {
+        FlywheelMotor.set(Power);
+    }
+    public void StaggeredFeed() {
+        IntakeMotor.set(1);
+        IndexerMotor.set(1);
+        LeftIndex.set(-0.25);
+        RightIndex.set(0.25);
+    }
+    public void StopFeed() {
+        IntakeMotor.set(0);
+        IndexerMotor.set(0);
+        LeftIndex.set(-0);
+        RightIndex.set(0);
+    }
 }

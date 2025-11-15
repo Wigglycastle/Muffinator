@@ -1,0 +1,44 @@
+package org.firstinspires.ftc.teamcode.Main.OpModes.AutoOp;
+
+
+import com.bylazar.telemetry.PanelsTelemetry;
+import com.bylazar.telemetry.TelemetryManager;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.Main.Subsystems.AprilSystem;
+import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
+import org.firstinspires.ftc.teamcode.Main.Subsystems.Drivebase;
+
+@TeleOp(name="AUTO-Foreward Launch", group="Linear OpMode")
+public class Launch extends LinearOpMode {
+    //init
+    @Override
+    public void runOpMode() {
+        // Create telemetry
+        TelemetryManager panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
+
+        // Create the subsystems
+        Drivebase Drivebase = new Drivebase(hardwareMap);
+        ArtifactSystem ArtifactSystem = new ArtifactSystem(hardwareMap);
+        //LightingSystem LightingSystem = new LightingSystem(hardwareMap);
+        AprilSystem AprilSystem = new AprilSystem(hardwareMap, telemetry);
+
+        // Configure telemetry
+        telemetry.setMsTransmissionInterval(100);
+
+        // Start Lights
+        //LightingSystem.PreGameLights();
+
+        // Go time
+        waitForStart();
+
+        // Change Lights
+        //LightingSystem.MidGameLights();
+
+        Drivebase.SetMotorPower(1);
+        sleep(1000);
+        Drivebase.SetMotorPower(0);
+    }
+}
+

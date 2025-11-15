@@ -39,6 +39,7 @@ public class AprilSystem {
     public double backLeftPower;
     public double backRightPower;
     private final Telemetry telemetry;
+    public boolean targetDistanceMet = false;
 
     public AprilSystem(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
@@ -64,7 +65,7 @@ public class AprilSystem {
     }
 
     public void CheckForTag(double desiredDistance, double desiredTagID) {
-
+        targetDistanceMet = false;
         if (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
             telemetry.addData("Camera", "Not streaming. Check connection.");
             // Set motors to 0
@@ -118,17 +119,17 @@ public class AprilSystem {
                 double  headingError    = desiredTag.ftcPose.bearing;
                 double  yawError        = desiredTag.ftcPose.yaw;
 
+                // If the error is below a threshold, then the robot is suffiently aligned
+                if (rangeError < 1 && headingError < 1 && yawError < 5) {
+                    targetDistanceMet = true;
+                }
+
                 // Use the speed and turn "gains" to calculate how the robot should move.
                 drive  = Range.clip(rangeError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
                 turn   = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN) ;
                 strafe = Range.clip(-yawError * STRAFE_GAIN, -MAX_AUTO_STRAFE, MAX_AUTO_STRAFE);
 
                 telemetry.addData("Auto","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
-            } else {
-                backLeftPower = 0;
-                frontLeftPower = 0;
-                backRightPower = 0;
-                frontRightPower = 0;
             }
 
             // Calculate wheel powers.
@@ -145,6 +146,13 @@ public class AprilSystem {
                 frontRightPower /= max;
                 backLeftPower /= max;
                 backRightPower /= max;
+             }
+             // Set power to zero if no target is found
+             if (!targetFound) {
+                 backLeftPower = 0;
+                 frontLeftPower = 0;
+                 backRightPower = 0;
+                 frontRightPower = 0;
              }
         }
 

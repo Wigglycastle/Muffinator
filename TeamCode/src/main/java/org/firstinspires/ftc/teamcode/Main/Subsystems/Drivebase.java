@@ -119,4 +119,27 @@ public class Drivebase {
         rightFrontDrive.setPower(( rotY - rotX - rx) / denom + aprilSystem.frontRightPower);
         rightBackDrive.setPower(( rotY + rotX - rx) / denom + aprilSystem.backRightPower);
         }
+        public void SetMotorPower(double Power) {
+            leftFrontDrive.setPower(Power);
+            leftBackDrive.setPower(Power);
+            rightFrontDrive.setPower(Power);
+            rightBackDrive.setPower(Power);
+        }
+
+        public boolean NavigateToAprilTag(AprilSystem aprilSystem, double DesiredTagID) {
+            aprilSystem.CheckForTag(30, DesiredTagID);
+            leftFrontDrive.setPower(aprilSystem.frontLeftPower);
+            leftBackDrive.setPower(aprilSystem.backLeftPower);
+            rightFrontDrive.setPower(aprilSystem.frontRightPower);
+            rightBackDrive.setPower(aprilSystem.backRightPower);
+            if (aprilSystem.targetDistanceMet) {
+                leftFrontDrive.setPower(0);
+                leftBackDrive.setPower(0);
+                rightFrontDrive.setPower(0);
+                rightBackDrive.setPower(0);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
