@@ -3,14 +3,14 @@ package org.firstinspires.ftc.teamcode.Main.OpModes.AutoOp;
 
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Main.Subsystems.AprilSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.Drivebase;
 
-@TeleOp(name="AUTO-Foreward Launch", group="Linear OpMode")
+@Autonomous(name="AUTO-Foreward Launch", group="Linear OpMode")
 public class Launch extends LinearOpMode {
     //init
     @Override
