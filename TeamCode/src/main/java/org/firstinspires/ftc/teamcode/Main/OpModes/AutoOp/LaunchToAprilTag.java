@@ -35,11 +35,12 @@ public class LaunchToAprilTag extends LinearOpMode {
         //LightingSystem.MidGameLights();
 
         while (opModeIsActive()) {
-            if (Drivebase.NavigateToAprilTag(AprilSystem,22)) {
+            if (Drivebase.NavigateToAprilTag(AprilSystem,22,36)) {
                 break;
             }
         }
         ArtifactSystem.FlywheelPowerTo(1);
+        sleep(2000);
         ArtifactSystem.StaggeredFeed();
         ArtifactSystem.FlywheelPowerTo(0);
         ArtifactSystem.StopFeed();

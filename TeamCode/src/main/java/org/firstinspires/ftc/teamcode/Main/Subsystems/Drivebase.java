@@ -126,8 +126,8 @@ public class Drivebase {
             rightBackDrive.setPower(Power);
         }
 
-        public boolean NavigateToAprilTag(AprilSystem aprilSystem, double DesiredTagID) {
-            aprilSystem.CheckForTag(30, DesiredTagID);
+        public boolean NavigateToAprilTag(AprilSystem aprilSystem, double DesiredTagID, double desiredDistance) {
+            aprilSystem.CheckForTag(desiredDistance, DesiredTagID);
             leftFrontDrive.setPower(aprilSystem.frontLeftPower);
             leftBackDrive.setPower(aprilSystem.backLeftPower);
             rightFrontDrive.setPower(aprilSystem.frontRightPower);
