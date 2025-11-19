@@ -21,7 +21,7 @@ public class AprilSystem {
     //  Drive = Error * Gain    Make these values smaller for smoother control, or larger for a more aggressive response.
     final double SPEED_GAIN  =  0.025  ;   //  Forward Speed Control "Gain". e.g. Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
     final double STRAFE_GAIN =  0.02 ;   //  Strafe Speed Control "Gain".  e.g. Ramp up to 37% power at a 25 degree Yaw error.   (0.375 / 25.0)
-    final double TURN_GAIN   =  0.0125  ;   //  Turn Control "Gain".  e.g. Ramp up to 25% power at a 25 degree error. (0.25 / 25.0)
+    final double TURN_GAIN   =  0.012  ;   //  Turn Control "Gain".  e.g. Ramp up to 25% power at a 25 degree error. (0.25 / 25.0)
     final double MAX_AUTO_SPEED = 1;
     final double MAX_AUTO_STRAFE= 1;
     final double MAX_AUTO_TURN  = 0.75;
@@ -112,7 +112,7 @@ public class AprilSystem {
                 double  yawError        = desiredTag.ftcPose.yaw;
 
                 // If the error is below a threshold, then the robot is suffiently aligned
-                if (rangeError < 1 && headingError < 1 && yawError < 5) {
+                if (rangeError < 0.5 && headingError < 0.5 && yawError < 2) {
                     targetDistanceMet = true;
                 }
 
