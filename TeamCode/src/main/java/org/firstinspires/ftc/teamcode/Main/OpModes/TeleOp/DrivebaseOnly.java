@@ -45,7 +45,7 @@ public class DrivebaseOnly extends LinearOpMode {
             gamepadEx2.readButtons();
 
             // Send gamepad inputs to the subsystems
-            Drivebase.ProcessInput(gamepadEx1, AprilSystem);
+            Drivebase.ProcessInput(gamepadEx1);
 
             // Create telemetry
             if (Drivebase.speedBool) {

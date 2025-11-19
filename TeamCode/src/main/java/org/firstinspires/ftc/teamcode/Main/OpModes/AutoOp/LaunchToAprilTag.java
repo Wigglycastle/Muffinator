@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.AprilSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.Drivebase;
+import org.firstinspires.ftc.teamcode.Main.Utils.DrivePowers;
+
 @Autonomous(name="AUTO-GOTO April Tag and Launch", group="Linear OpMode")
 public class LaunchToAprilTag extends LinearOpMode {
     //init
@@ -35,13 +37,21 @@ public class LaunchToAprilTag extends LinearOpMode {
         //LightingSystem.MidGameLights();
 
         while (opModeIsActive()) {
-            if (Drivebase.NavigateToAprilTag(AprilSystem,22,36)) {
+            DrivePowers drivePowers = AprilSystem.CheckForTag(36,24);
+            if (drivePowers != null) {
+                Drivebase.SetMotorPowers(drivePowers);
+            } else {
+                telemetry.addLine("ERROR: NO VAILD APRIL TAG FOUND!");
+            }
+            if (AprilSystem.targetDistanceMet) {
+                Drivebase.SetMotorPowerBasic(0);
                 break;
             }
         }
         ArtifactSystem.FlywheelPowerTo(1);
         sleep(2000);
         ArtifactSystem.StaggeredFeed();
+        sleep(15000);
         ArtifactSystem.FlywheelPowerTo(0);
         ArtifactSystem.StopFeed();
     }

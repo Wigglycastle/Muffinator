@@ -5,11 +5,12 @@ import com.bylazar.telemetry.TelemetryManager;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
+import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.Main.Subsystems.AprilSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.Drivebase;
-
+import org.firstinspires.ftc.teamcode.Main.Utils.DrivePowers;
 
 
 @TeleOp(name="Main TeleOp", group="Linear OpMode")
@@ -58,9 +59,20 @@ public class MainTeleOp extends LinearOpMode {
             gamepadEx2.readButtons();
 
             // Send gamepad inputs to the subsystems
-            Drivebase.ProcessInput(gamepadEx1, AprilSystem);
             ArtifactSystem.ProcessInput(gamepadEx1);
             //Climb.ProcessInput(gamepadEx2);
+
+            // Calculate wheel outputs
+            DrivePowers gamepadPowers = Drivebase.ProcessInput(gamepadEx1);
+            DrivePowers aprilPowers = null;
+            if (gamepadEx1.getButton(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
+                aprilPowers = AprilSystem.CheckForTag(40, -1);
+            }
+            if (aprilPowers != null) {
+                Drivebase.SetMotorPowers(aprilPowers);
+            } else {
+                Drivebase.SetMotorPowers(gamepadPowers);
+            }
 
             // Create telemetry
             if (Drivebase.speedBool) {
@@ -73,7 +85,8 @@ public class MainTeleOp extends LinearOpMode {
             panelsTelemetry.addData("REV IMU Heading", Drivebase.heading2);
 
             // Update telemetry
-            panelsTelemetry.update(telemetry);
+            panelsTelemetry.update();
+            telemetry.update();
         }
     }
 }

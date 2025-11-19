@@ -7,6 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl;
+import org.firstinspires.ftc.teamcode.Main.Utils.DrivePowers;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -34,10 +35,6 @@ public class AprilSystem {
     double  drive           = 0;
     double  strafe          = 0;
     double  turn            = 0;
-    public double frontLeftPower;
-    public double frontRightPower;
-    public double backLeftPower;
-    public double backRightPower;
     private final Telemetry telemetry;
     public boolean targetDistanceMet = false;
 
@@ -64,17 +61,12 @@ public class AprilSystem {
         setManualExposure(exposureMS, gain);  // Use low exposure time to reduce motion blur
     }
 
-    public void CheckForTag(double desiredDistance, double desiredTagID) {
+    public DrivePowers CheckForTag(double desiredDistance, double desiredTagID) {
         targetDistanceMet = false;
         if (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
             telemetry.addData("Camera", "Not streaming. Check connection.");
-            // Set motors to 0
-            backLeftPower = 0;
-            frontLeftPower = 0;
-            backRightPower = 0;
-            frontRightPower = 0;
             targetFound = false;
-            return; // Exit the method early
+            return null; // Exit the method early
         }
 
             targetFound = false;
@@ -133,10 +125,10 @@ public class AprilSystem {
             }
 
             // Calculate wheel powers.
-            frontLeftPower    =  drive - strafe - turn;
-            frontRightPower   =  drive + strafe + turn;
-            backLeftPower     =  drive + strafe - turn;
-            backRightPower    =  drive - strafe + turn;
+            double frontLeftPower    =  drive - strafe - turn;
+            double frontRightPower   =  drive + strafe + turn;
+            double backLeftPower     =  drive + strafe - turn;
+            double backRightPower    =  drive - strafe + turn;
             // Normalize power values
             double max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
             max = Math.max(max, Math.abs(backLeftPower));
@@ -148,11 +140,10 @@ public class AprilSystem {
                 backRightPower /= max;
              }
              // Set power to zero if no target is found
-             if (!targetFound) {
-                 backLeftPower = 0;
-                 frontLeftPower = 0;
-                 backRightPower = 0;
-                 frontRightPower = 0;
+             if (targetFound) {
+                 return new DrivePowers(frontLeftPower,backLeftPower,frontRightPower,backRightPower);
+             } else {
+                 return null;
              }
         }
 

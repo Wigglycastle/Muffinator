@@ -36,9 +36,9 @@ public class Launch extends LinearOpMode {
         // Change Lights
         //LightingSystem.MidGameLights();
 
-        Drivebase.SetMotorPower(1);
-        sleep(1000);
-        Drivebase.SetMotorPower(0);
+        Drivebase.SetMotorPowerBasic(1);
+        sleep(4000);
+        Drivebase.SetMotorPowerBasic(0);
     }
 }
 
