@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Main.Subsystems;
 
 import static android.os.SystemClock.sleep;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -37,6 +38,8 @@ public class AprilSystem {
     double  turn            = 0;
     private final Telemetry telemetry;
     public boolean targetDistanceMet = false;
+    private  ElapsedTime time = null;
+    private boolean timerStart = false;
 
     public AprilSystem(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
@@ -107,21 +110,27 @@ public class AprilSystem {
             if (targetFound) {
 
                 // Determine heading, range and Yaw (tag image rotation) error so we can use them to control the robot automatically.
-                double  rangeError      = (desiredTag.ftcPose.range - desiredDistance);
-                double  headingError    = desiredTag.ftcPose.bearing;
-                double  yawError        = desiredTag.ftcPose.yaw;
+                double rangeError = (desiredTag.ftcPose.range - desiredDistance);
+                double headingError = desiredTag.ftcPose.bearing;
+                double yawError = desiredTag.ftcPose.yaw;
 
                 // If the error is below a threshold, then the robot is suffiently aligned
-                if (rangeError < 0.5 && headingError < 0.5 && yawError < 2) {
-                    targetDistanceMet = true;
+                if (rangeError < 0.5 && headingError < 0.5 && yawError < 3 && !timerStart) {
+                    time = new ElapsedTime();
+                    timerStart = true;
+                }
+                if (time != null) {
+                    if (time.seconds() > 3) {
+                        targetDistanceMet = true;
+                    }
                 }
 
                 // Use the speed and turn "gains" to calculate how the robot should move.
-                drive  = Range.clip(rangeError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
-                turn   = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN) ;
+                drive = Range.clip(rangeError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
+                turn = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN);
                 strafe = Range.clip(-yawError * STRAFE_GAIN, -MAX_AUTO_STRAFE, MAX_AUTO_STRAFE);
 
-                telemetry.addData("Auto","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
+                telemetry.addData("Auto", "Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
             }
 
             // Calculate wheel powers.

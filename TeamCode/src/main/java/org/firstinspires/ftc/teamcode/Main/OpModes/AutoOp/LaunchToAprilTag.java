@@ -37,7 +37,7 @@ public class LaunchToAprilTag extends LinearOpMode {
         //LightingSystem.MidGameLights();
 
         while (opModeIsActive()) {
-            DrivePowers drivePowers = AprilSystem.CheckForTag(36,24);
+            DrivePowers drivePowers = AprilSystem.CheckForTag(60,24);
             if (drivePowers != null) {
                 Drivebase.SetMotorPowers(drivePowers);
             } else {
