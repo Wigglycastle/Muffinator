@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Main.OpModes.AutoOp;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -9,9 +10,10 @@ import org.firstinspires.ftc.teamcode.Main.Subsystems.AprilSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.Drivebase;
 import org.firstinspires.ftc.teamcode.Main.Utils.DrivePowers;
-
+@Configurable
 @Autonomous(name="AUTO-GOTO April Tag and Launch", group="Linear OpMode")
 public class LaunchToAprilTag extends LinearOpMode {
+    public static int targetAprilTag = 20;
     //init
     @Override
     public void runOpMode() {
@@ -37,7 +39,7 @@ public class LaunchToAprilTag extends LinearOpMode {
         //LightingSystem.MidGameLights();
 
         while (opModeIsActive()) {
-            DrivePowers drivePowers = AprilSystem.CheckForTag(60,24);
+            DrivePowers drivePowers = AprilSystem.CheckForTag(60,targetAprilTag);
             if (drivePowers != null) {
                 Drivebase.SetMotorPowers(drivePowers);
             } else {
