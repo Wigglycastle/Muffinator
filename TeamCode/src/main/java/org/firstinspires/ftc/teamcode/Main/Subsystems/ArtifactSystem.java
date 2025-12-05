@@ -12,6 +12,7 @@ public class ArtifactSystem {
     private final Motor IndexerMotor;
     private final CRServoEx LeftIndex;
     private final CRServoEx RightIndex;
+    private final CRServoEx IntakeServo;
     private boolean flywheelState;
     private enum ArtifactSystemStates {
         INTAKE,
@@ -25,6 +26,7 @@ public class ArtifactSystem {
     private double intakePower;
     private double indexPower;
     private double flwPower;
+    private double intakeServoPower;
 
     
 
@@ -37,6 +39,7 @@ public class ArtifactSystem {
         //Initialize Servos
         LeftIndex = new CRServoEx(hardwareMap, "leftIndexerServo");
         RightIndex = new CRServoEx(hardwareMap, "rightIndexerServo");
+        IntakeServo = new CRServoEx(hardwareMap,"IntakeServo");
     }
 
     public void ProcessInput(GamepadEx gamepad) {
@@ -72,12 +75,14 @@ public class ArtifactSystem {
                 leftPower = 0;
                 rightPower = 0;
                 flwPower = 0;
+                intakeServoPower = 0;
                 break;
             case INTAKE:
                 intakePower = 1;
                 indexPower = 1;
                 leftPower = 1;
                 rightPower = -1;
+                intakeServoPower = 1;
                 break;
             case HUMAN_INTAKE:
                 leftPower = 1;
@@ -85,18 +90,21 @@ public class ArtifactSystem {
                 flwPower = -0.5;
                 indexPower = 0;
                 intakePower = 0;
+                intakeServoPower = 0;
                 break;
             case OUTTAKE:
                 intakePower = 1;
                 indexPower = 1;
                 leftPower = -0.5;
                 rightPower = 0.5;
+                intakeServoPower = 1;
                 break;
             case FLUSH:
                 leftPower = 1;
                 rightPower = -1;
                 intakePower = -1;
                 indexPower = -1;
+                intakeServoPower = -1;
                 break;
         }
         if (flywheelState) {
@@ -107,6 +115,7 @@ public class ArtifactSystem {
         RightIndex.set(rightPower);
         IntakeMotor.set(intakePower);
         IndexerMotor.set(indexPower);
+        IntakeServo.set(intakeServoPower);
     }
     public void FlywheelPowerTo(double Power) {
         FlywheelMotor.set(Power);
@@ -116,11 +125,13 @@ public class ArtifactSystem {
         IndexerMotor.set(1);
         LeftIndex.set(-0.25);
         RightIndex.set(0.25);
+        IntakeServo.set(1);
     }
     public void StopFeed() {
         IntakeMotor.set(0);
         IndexerMotor.set(0);
         LeftIndex.set(-0);
         RightIndex.set(0);
+        IntakeServo.set(0);
     }
 }
