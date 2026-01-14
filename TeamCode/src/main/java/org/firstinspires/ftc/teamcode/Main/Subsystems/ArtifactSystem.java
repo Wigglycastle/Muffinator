@@ -14,7 +14,7 @@ public class ArtifactSystem {
     private final CRServoEx RightIndex;
     private final CRServoEx IntakeServo;
     private boolean flywheelState;
-    private enum ArtifactSystemStates {
+    public enum ArtifactSystemStates {
         INTAKE,
         OUTTAKE,
         HUMAN_INTAKE,
@@ -27,12 +27,14 @@ public class ArtifactSystem {
     private double indexPower;
     private double flwPower;
     private double intakeServoPower;
+    public ArtifactSystemStates currentState;
+    public double flywheelRPM;
 
     
 
     public ArtifactSystem(HardwareMap hardwareMap) {
         // Initialize Motors
-        FlywheelMotor = new Motor(hardwareMap, "flywheelMotor", Motor.GoBILDA.RPM_312);
+        FlywheelMotor = new Motor(hardwareMap, "flywheelMotor", Motor.GoBILDA.BARE);
         IntakeMotor = new Motor(hardwareMap, "intakeMotor", Motor.GoBILDA.RPM_312);
         IndexerMotor = new Motor(hardwareMap, "indexerMotor", Motor.GoBILDA.RPM_312);
 
@@ -40,35 +42,30 @@ public class ArtifactSystem {
         LeftIndex = new CRServoEx(hardwareMap, "leftIndexerServo");
         RightIndex = new CRServoEx(hardwareMap, "rightIndexerServo");
         IntakeServo = new CRServoEx(hardwareMap,"IntakeServo");
+        FlywheelMotor.setRunMode(Motor.RunMode.VelocityControl);
+
     }
 
-    public void ProcessInput(GamepadEx gamepad) {
+    public void setState(ArtifactSystemStates state) {
+        currentState = state;
+    }
+
+    public void setFlywheel(boolean enabled) {
+        flywheelState = enabled;
+    }
+
+    public void Update() {
+        flywheelRPM = FlywheelMotor.getCorrectedVelocity();
         /*
         INPUT MAP:
         RT = Ground Intake
         RB = Human Intake
         LT = Outtake
         LB = Flush
-        X = FLywheel Foreward
+        X = Flywheel Forward
         B = Flywheel Stop
          */
-        ArtifactSystemStates artifactSystemState = ArtifactSystemStates.IDLE;
-
-        if (gamepad.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
-            artifactSystemState = ArtifactSystemStates.HUMAN_INTAKE;
-        } else if (gamepad.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
-            artifactSystemState = ArtifactSystemStates.FLUSH;
-        } else if (gamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1) {
-            artifactSystemState = ArtifactSystemStates.INTAKE;
-        } else if (gamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1) {
-            artifactSystemState = ArtifactSystemStates.OUTTAKE;
-        }
-        if (gamepad.wasJustPressed(GamepadKeys.Button.X)) {
-            flywheelState = true;
-        } else if (gamepad.wasJustPressed(GamepadKeys.Button.B)) {
-            flywheelState = false;
-        }
-        switch(artifactSystemState) {
+        switch(currentState) {
             case IDLE:
                 intakePower = 0;
                 indexPower = 0;
@@ -79,7 +76,7 @@ public class ArtifactSystem {
                 break;
             case INTAKE:
                 intakePower = 1;
-                indexPower = 1;
+                indexPower = .8;
                 leftPower = 1;
                 rightPower = -1;
                 intakeServoPower = 1;
@@ -94,7 +91,7 @@ public class ArtifactSystem {
                 break;
             case OUTTAKE:
                 intakePower = 1;
-                indexPower = 1;
+                indexPower = .8;
                 leftPower = -0.5;
                 rightPower = 0.5;
                 intakeServoPower = 1;
@@ -110,7 +107,7 @@ public class ArtifactSystem {
         if (flywheelState) {
             flwPower = 1;
         }
-        FlywheelMotor.set(flwPower);
+        FlywheelMotor.set(flwPower*0.8);
         LeftIndex.set(leftPower);
         RightIndex.set(rightPower);
         IntakeMotor.set(intakePower);

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Main.OpModes.TeleOp;
 
+import static org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem.ArtifactSystemStates.*;
+
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -34,7 +36,6 @@ public class MainTeleOp extends LinearOpMode {
         // Create the subsystems
         Drivebase Drivebase = new Drivebase(hardwareMap);
         ArtifactSystem ArtifactSystem = new ArtifactSystem(hardwareMap);
-        //Climb Climb = new Climb(hardwareMap);
         //LightingSystem LightingSystem = new LightingSystem(hardwareMap);
         AprilSystem AprilSystem = new AprilSystem(hardwareMap, telemetry);
 
@@ -50,17 +51,32 @@ public class MainTeleOp extends LinearOpMode {
         // Change Lights
         //LightingSystem.MidGameLights();
 
-        // Enable Climb Movement
-        //Climb.EnableMotors();
-
         while (opModeIsActive()) {
             // Read controllers
             gamepadEx1.readButtons();
             gamepadEx2.readButtons();
 
             // Send gamepad inputs to the subsystems
-            ArtifactSystem.ProcessInput(gamepadEx1);
-            //Climb.ProcessInput(gamepadEx2);
+            if (gamepadEx1.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
+                ArtifactSystem.setState(HUMAN_INTAKE);
+            } else if (gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1) {
+                ArtifactSystem.setState(INTAKE);
+            } else if (gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1) {
+                ArtifactSystem.setState(OUTTAKE);
+            } else if (gamepadEx1.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
+                ArtifactSystem.setState(FLUSH);
+            } else {
+                ArtifactSystem.setState(IDLE);
+            }
+
+            if (gamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
+                ArtifactSystem.setFlywheel(true);
+            }
+            if (gamepadEx1.wasJustPressed(GamepadKeys.Button.B)) {
+                ArtifactSystem.setFlywheel(false);
+            }
+
+            ArtifactSystem.Update();
 
             // Calculate wheel outputs
             DrivePowers gamepadPowers = Drivebase.ProcessInput(gamepadEx1);
@@ -83,6 +99,7 @@ public class MainTeleOp extends LinearOpMode {
             // Add panels telemetry
             panelsTelemetry.addData("Pinpoint Heading", Drivebase.heading1);
             panelsTelemetry.addData("REV IMU Heading", Drivebase.heading2);
+            panelsTelemetry.addData("FlywheelRPM", ArtifactSystem.flywheelRPM);
 
             // Update telemetry
             panelsTelemetry.update();
