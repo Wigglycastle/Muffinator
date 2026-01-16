@@ -44,6 +44,8 @@ public class ArtifactSystem {
         IntakeServo = new CRServoEx(hardwareMap,"IntakeServo");
         FlywheelMotor.setRunMode(Motor.RunMode.VelocityControl);
 
+        currentState = ArtifactSystemStates.IDLE;
+        flywheelState = false;
     }
 
     public void setState(ArtifactSystemStates state) {
@@ -107,7 +109,7 @@ public class ArtifactSystem {
         if (flywheelState) {
             flwPower = 1;
         }
-        FlywheelMotor.set(flwPower*0.8);
+        FlywheelMotor.set(flwPower);
         LeftIndex.set(leftPower);
         RightIndex.set(rightPower);
         IntakeMotor.set(intakePower);

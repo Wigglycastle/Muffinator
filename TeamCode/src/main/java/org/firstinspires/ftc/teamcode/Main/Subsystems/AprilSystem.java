@@ -15,6 +15,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import com.bylazar.camerastream.PanelsCameraStream;
+
 
 public class AprilSystem {
     //  Set the GAIN constants to control the relationship between the measured position error, and how much power is
@@ -54,13 +56,14 @@ public class AprilSystem {
         // Decimation = 3 ..  Detect 5" Tag from 10 feet away at 30 Frames Per Second
         // Note: Decimation can be changed on-the-fly to adapt during a match.
         aprilTag.setDecimation(2);
-
         // Create the vision portal by using a builder.
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .addProcessor(aprilTag)
                 .build();
-        //TODO: Figure out exposure
+
+        //PanelsCameraStream.INSTANCE.startStream(visionPortal,30);
+
         setManualExposure(exposureMS, gain);  // Use low exposure time to reduce motion blur
     }
 
