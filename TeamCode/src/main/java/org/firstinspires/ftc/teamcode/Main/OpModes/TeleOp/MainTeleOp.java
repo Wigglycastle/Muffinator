@@ -102,8 +102,7 @@ public class MainTeleOp extends LinearOpMode {
             panelsTelemetry.addData("FlywheelRPM", ArtifactSystem.flywheelRPM);
 
             // Update telemetry
-            panelsTelemetry.update();
-            telemetry.update();
+            panelsTelemetry.update(telemetry);
         }
     }
 }

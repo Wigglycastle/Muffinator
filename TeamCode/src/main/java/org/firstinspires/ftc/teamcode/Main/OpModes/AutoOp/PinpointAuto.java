@@ -15,7 +15,7 @@ import com.pedropathing.paths.PathChain;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "9.3 Pedro Auto", group = "Autonomous")
+@Autonomous(name = "9.3 BLUE Auto", group = "Autonomous")
 @Configurable // Panels
 public class PinpointAuto extends OpMode {
     private TelemetryManager panelsTelemetry; // Panels Telemetry instance
@@ -25,12 +25,13 @@ public class PinpointAuto extends OpMode {
     private final ElapsedTime stateTimer = new ElapsedTime();
     private ArtifactSystem artifactSystem;
     int pulseCounter = 0;
+    private final float outtakeTime = 2;
     @Override
     public void init() {
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
         artifactSystem = new ArtifactSystem(hardwareMap);
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(new Pose(57.399, 9.264, Math.toRadians(90)));
+        follower.setStartingPose(new Pose(56.9958041958042, 9.264335664335658, Math.toRadians(90)));
 
         paths = new Paths(follower); // Build paths
 
@@ -68,29 +69,29 @@ public class PinpointAuto extends OpMode {
         public Paths(Follower follower) {
             Path1 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(57.399, 9.264),
-                                    new Pose(65.368, 81.740),
-                                    new Pose(47.933, 107.950)
+                                    new Pose(56.996, 9.264),
+                                    new Pose(63.129, 85.050),
+                                    new Pose(54.579, 97.276)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(140))
+                    ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(142))
 
                     .build();
 
             Path2 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(47.933, 107.950),
-                                    new Pose(58.694, 86.580),
-                                    new Pose(49.947, 84.386)
+                                    new Pose(54.579, 97.276),
+                                    new Pose(54.332, 89.566),
+                                    new Pose(49.343, 83.782)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(180))
+                    ).setLinearHeadingInterpolation(Math.toRadians(142), Math.toRadians(180))
 
                     .build();
 
             Path3 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(49.947, 84.386),
+                                    new Pose(49.343, 83.782),
 
-                                    new Pose(15.306, 84.386)
+                                    new Pose(15.105, 83.178)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -98,29 +99,29 @@ public class PinpointAuto extends OpMode {
 
             Path4 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(15.306, 84.386),
-                                    new Pose(50.680, 81.459),
-                                    new Pose(47.731, 107.950)
+                                    new Pose(15.105, 83.178),
+                                    new Pose(39.796, 86.692),
+                                    new Pose(54.378, 97.678)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(140))
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(142))
 
                     .build();
 
             Path5 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(47.731, 107.950),
-                                    new Pose(59.642, 78.171),
-                                    new Pose(49.343, 59.211)
+                                    new Pose(54.378, 97.678),
+                                    new Pose(53.600, 80.990),
+                                    new Pose(52.968, 61.225)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(180))
+                    ).setLinearHeadingInterpolation(Math.toRadians(142), Math.toRadians(180))
 
                     .build();
 
             Path6 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(49.343, 59.211),
+                                    new Pose(52.968, 61.225),
 
-                                    new Pose(9.667, 58.204)
+                                    new Pose(16.917, 60.621)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -128,29 +129,29 @@ public class PinpointAuto extends OpMode {
 
             Path7 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(9.667, 58.204),
-                                    new Pose(40.495, 58.520),
-                                    new Pose(48.134, 107.547)
+                                    new Pose(16.917, 60.621),
+                                    new Pose(48.060, 67.357),
+                                    new Pose(54.579, 97.477)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(140))
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(142))
 
                     .build();
 
             Path8 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(48.134, 107.547),
-                                    new Pose(54.204, 63.605),
-                                    new Pose(48.190, 35.733)
+                                    new Pose(54.579, 97.477),
+                                    new Pose(60.246, 69.848),
+                                    new Pose(52.017, 36.136)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(180))
+                    ).setLinearHeadingInterpolation(Math.toRadians(142), Math.toRadians(180))
 
                     .build();
 
             Path9 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(48.190, 35.733),
+                                    new Pose(52.017, 36.136),
 
-                                    new Pose(8.442, 35.452)
+                                    new Pose(14.484, 36.056)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -158,11 +159,11 @@ public class PinpointAuto extends OpMode {
 
             Path10 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(8.442, 35.452),
-                                    new Pose(47.023, 64.492),
-                                    new Pose(48.172, 107.790)
+                                    new Pose(14.484, 36.056),
+                                    new Pose(49.740, 54.634),
+                                    new Pose(54.818, 97.519)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(140))
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(142))
 
                     .build();
         }
@@ -187,7 +188,7 @@ public class PinpointAuto extends OpMode {
                 break;
 
             case 100: // Outtake after path 1
-                if (stateTimer.seconds() > 3.0) { // Outtake duration
+                if (stateTimer.seconds() > outtakeTime) { // Outtake duration
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     follower.followPath(paths.Path2, true);
                     pathState = 2;
@@ -220,7 +221,7 @@ public class PinpointAuto extends OpMode {
                 break;
 
             case 101: // Outtake after path 4
-                if (stateTimer.seconds() > 3.0) {
+                if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     follower.followPath(paths.Path5, true);
                     pathState = 5;
@@ -253,7 +254,7 @@ public class PinpointAuto extends OpMode {
                 break;
 
             case 102: // Outtake after path 7
-                if (stateTimer.seconds() > 3.0) {
+                if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     follower.followPath(paths.Path8, true);
                     pathState = 8;
@@ -286,7 +287,7 @@ public class PinpointAuto extends OpMode {
                 break;
 
             case 103: // Final outtake
-                if (stateTimer.seconds() > 3.0) {
+                if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     artifactSystem.setFlywheel(false); // Stop flywheel when done
                     pathState = 11; // Done
