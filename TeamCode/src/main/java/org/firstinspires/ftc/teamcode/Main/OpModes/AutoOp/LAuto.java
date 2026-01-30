@@ -17,7 +17,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "9.3 BLUE Auto", group = "Autonomous")
 @Configurable // Panels
-public class PinpointAuto extends OpMode {
+public class LAuto extends OpMode {
     private TelemetryManager panelsTelemetry; // Panels Telemetry instance
     public Follower follower; // Pedro Pathing follower instance
     private int pathState; // Current autonomous path state (state machine)
@@ -38,7 +38,6 @@ public class PinpointAuto extends OpMode {
         panelsTelemetry.debug("Status", "Initialized");
         panelsTelemetry.update(telemetry);
         pathState = 0;
-
     }
 
     @Override
@@ -79,7 +78,7 @@ public class PinpointAuto extends OpMode {
 
             Path2 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(54.579, 97.276),
+                                    new Pose(54.579, 97.276).mirror(),
                                     new Pose(54.332, 89.566),
                                     new Pose(49.343, 83.782)
                             )
