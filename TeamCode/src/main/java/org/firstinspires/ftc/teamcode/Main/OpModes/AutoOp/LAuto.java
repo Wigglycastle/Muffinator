@@ -69,28 +69,28 @@ public class LAuto extends OpMode {
             Path1 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(56.996, 9.264),
-                                    new Pose(63.129, 85.050),
-                                    new Pose(54.579, 97.276)
+                                    new Pose(57.087, 87.467),
+                                    new Pose(57.600, 103.519)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(142))
+                    ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(143))
 
                     .build();
 
             Path2 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(54.579, 97.276).mirror(),
-                                    new Pose(54.332, 89.566),
-                                    new Pose(49.343, 83.782)
+                                    new Pose(57.600, 103.519),
+                                    new Pose(57.152, 88.559),
+                                    new Pose(47.731, 83.580)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(142), Math.toRadians(180))
+                    ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(180))
 
                     .build();
 
             Path3 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(49.343, 83.782),
+                                    new Pose(47.731, 83.580),
 
-                                    new Pose(15.105, 83.178)
+                                    new Pose(18.327, 83.983)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -98,29 +98,29 @@ public class LAuto extends OpMode {
 
             Path4 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(15.105, 83.178),
-                                    new Pose(39.796, 86.692),
-                                    new Pose(54.378, 97.678)
+                                    new Pose(18.327, 83.983),
+                                    new Pose(56.915, 88.907),
+                                    new Pose(56.996, 103.922)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(142))
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(143))
 
                     .build();
 
             Path5 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(54.378, 97.678),
-                                    new Pose(53.600, 80.990),
-                                    new Pose(52.968, 61.225)
+                                    new Pose(56.996, 103.922),
+                                    new Pose(56.822, 88.442),
+                                    new Pose(47.731, 59.211)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(142), Math.toRadians(180))
+                    ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(180))
 
                     .build();
 
             Path6 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(52.968, 61.225),
+                                    new Pose(47.731, 59.211),
 
-                                    new Pose(16.917, 60.621)
+                                    new Pose(18.529, 59.614)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -128,29 +128,29 @@ public class LAuto extends OpMode {
 
             Path7 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(16.917, 60.621),
-                                    new Pose(48.060, 67.357),
-                                    new Pose(54.579, 97.477)
+                                    new Pose(18.529, 59.614),
+                                    new Pose(57.123, 87.698),
+                                    new Pose(57.399, 103.317)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(142))
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(143))
 
                     .build();
 
             Path8 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(54.579, 97.477),
-                                    new Pose(60.246, 69.848),
-                                    new Pose(52.017, 36.136)
+                                    new Pose(57.399, 103.317),
+                                    new Pose(57.427, 87.974),
+                                    new Pose(47.385, 34.927)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(142), Math.toRadians(180))
+                    ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(180))
 
                     .build();
 
             Path9 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(52.017, 36.136),
+                                    new Pose(47.385, 34.927),
 
-                                    new Pose(14.484, 36.056)
+                                    new Pose(18.915, 35.855)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -158,11 +158,11 @@ public class LAuto extends OpMode {
 
             Path10 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(14.484, 36.056),
-                                    new Pose(49.740, 54.634),
-                                    new Pose(54.818, 97.519)
+                                    new Pose(18.915, 35.855),
+                                    new Pose(48.733, 56.447),
+                                    new Pose(57.638, 103.158)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(142))
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(143))
 
                     .build();
         }
