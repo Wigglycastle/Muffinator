@@ -107,7 +107,7 @@ public class ArtifactSystem {
                 break;
         }
         if (flywheelState) {
-            flwPower = 1;
+            flwPower = .9;
         }
         FlywheelMotor.set(flwPower);
         LeftIndex.set(leftPower);
