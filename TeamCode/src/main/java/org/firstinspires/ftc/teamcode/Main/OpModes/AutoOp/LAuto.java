@@ -7,6 +7,7 @@ import com.bylazar.telemetry.TelemetryManager;
 import com.bylazar.telemetry.PanelsTelemetry;
 
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
+import org.firstinspires.ftc.teamcode.Main.Utils.HeadingStorage;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
@@ -23,6 +24,7 @@ public class LAuto extends OpMode {
     private int pathState; // Current autonomous path state (state machine)
     private Paths paths; // Paths defined in the Paths class
     private final ElapsedTime stateTimer = new ElapsedTime();
+    private final double INTAKE_SPEED = 0.5;
     private ArtifactSystem artifactSystem;
     int pulseCounter = 0;
     private final float outtakeTime = 2;
@@ -69,8 +71,8 @@ public class LAuto extends OpMode {
             Path1 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(56.996, 9.264),
-                                    new Pose(57.087, 87.467),
-                                    new Pose(57.600, 103.519)
+                                    new Pose(57.691, 70.952),
+                                    new Pose(56.190, 98.283)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(143))
 
@@ -78,9 +80,9 @@ public class LAuto extends OpMode {
 
             Path2 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(57.600, 103.519),
-                                    new Pose(57.152, 88.559),
-                                    new Pose(47.731, 83.580)
+                                    new Pose(56.190, 98.283),
+                                    new Pose(59.770, 90.573),
+                                    new Pose(59.815, 83.983)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(180))
 
@@ -88,9 +90,9 @@ public class LAuto extends OpMode {
 
             Path3 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(47.731, 83.580),
+                                    new Pose(59.815, 83.983),
 
-                                    new Pose(18.327, 83.983)
+                                    new Pose(15.306, 83.983)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -98,9 +100,9 @@ public class LAuto extends OpMode {
 
             Path4 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(18.327, 83.983),
-                                    new Pose(56.915, 88.907),
-                                    new Pose(56.996, 103.922)
+                                    new Pose(15.306, 83.983),
+                                    new Pose(53.289, 82.664),
+                                    new Pose(56.190, 98.081)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(143))
 
@@ -108,9 +110,9 @@ public class LAuto extends OpMode {
 
             Path5 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(56.996, 103.922),
-                                    new Pose(56.822, 88.442),
-                                    new Pose(47.731, 59.211)
+                                    new Pose(56.190, 98.081),
+                                    new Pose(63.469, 91.262),
+                                    new Pose(59.211, 60.017)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(180))
 
@@ -118,9 +120,9 @@ public class LAuto extends OpMode {
 
             Path6 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(47.731, 59.211),
+                                    new Pose(59.211, 60.017),
 
-                                    new Pose(18.529, 59.614)
+                                    new Pose(13.091, 60.017)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -128,9 +130,9 @@ public class LAuto extends OpMode {
 
             Path7 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(18.529, 59.614),
-                                    new Pose(57.123, 87.698),
-                                    new Pose(57.399, 103.317)
+                                    new Pose(13.091, 60.017),
+                                    new Pose(54.102, 70.579),
+                                    new Pose(56.392, 98.081)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(143))
 
@@ -138,9 +140,9 @@ public class LAuto extends OpMode {
 
             Path8 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(57.399, 103.317),
-                                    new Pose(57.427, 87.974),
-                                    new Pose(47.385, 34.927)
+                                    new Pose(56.392, 98.081),
+                                    new Pose(63.871, 83.946),
+                                    new Pose(59.267, 35.733)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(180))
 
@@ -148,9 +150,9 @@ public class LAuto extends OpMode {
 
             Path9 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(47.385, 34.927),
+                                    new Pose(59.267, 35.733),
 
-                                    new Pose(18.915, 35.855)
+                                    new Pose(13.074, 35.733)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -158,9 +160,9 @@ public class LAuto extends OpMode {
 
             Path10 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(18.915, 35.855),
-                                    new Pose(48.733, 56.447),
-                                    new Pose(57.638, 103.158)
+                                    new Pose(13.074, 35.733),
+                                    new Pose(48.330, 63.898),
+                                    new Pose(56.631, 98.123)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(143))
 
@@ -179,15 +181,14 @@ public class LAuto extends OpMode {
 
             case 1:
                 if (!follower.isBusy()) {
-                    // End of path 1 - start outtake
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.OUTTAKE);
                     stateTimer.reset();
-                    pathState = 100; // Outtake sub-state
+                    pathState = 100;
                 }
                 break;
 
-            case 100: // Outtake after path 1
-                if (stateTimer.seconds() > outtakeTime) { // Outtake duration
+            case 100:
+                if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     follower.followPath(paths.Path2, true);
                     pathState = 2;
@@ -196,15 +197,17 @@ public class LAuto extends OpMode {
 
             case 2:
                 if (!follower.isBusy()) {
+                    follower.setMaxPower(INTAKE_SPEED);
                     follower.followPath(paths.Path3, true);
-                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE); // Intake during path 3
+                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE);
                     pathState = 3;
                 }
                 break;
 
             case 3:
                 if (!follower.isBusy()) {
-                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE); // Stop intake
+                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
+                    follower.setMaxPower(1);
                     follower.followPath(paths.Path4, true);
                     pathState = 4;
                 }
@@ -229,6 +232,7 @@ public class LAuto extends OpMode {
 
             case 5:
                 if (!follower.isBusy()) {
+                    follower.setMaxPower(INTAKE_SPEED);
                     follower.followPath(paths.Path6, true);
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE); // Intake during path 6
                     pathState = 6;
@@ -237,6 +241,7 @@ public class LAuto extends OpMode {
 
             case 6:
                 if (!follower.isBusy()) {
+                    follower.setMaxPower(1);
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     follower.followPath(paths.Path7, true);
                     pathState = 7;
@@ -262,6 +267,7 @@ public class LAuto extends OpMode {
 
             case 8:
                 if (!follower.isBusy()) {
+                    follower.setMaxPower(INTAKE_SPEED);
                     follower.followPath(paths.Path9, true);
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE); // Intake during path 9
                     pathState = 9;
@@ -270,6 +276,7 @@ public class LAuto extends OpMode {
 
             case 9:
                 if (!follower.isBusy()) {
+                    follower.setMaxPower(1);
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     follower.followPath(paths.Path10, true);
                     pathState = 10;
@@ -278,7 +285,6 @@ public class LAuto extends OpMode {
 
             case 10:
                 if (!follower.isBusy()) {
-                    // End of path 10 - final outtake
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.OUTTAKE);
                     stateTimer.reset();
                     pathState = 103;
@@ -299,6 +305,11 @@ public class LAuto extends OpMode {
         }
 
         return pathState;
+    }
+
+    @Override
+    public void stop() {
+        HeadingStorage.heading = follower.getHeading() + Math.toRadians(-90);
     }
 }
     

@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
+import org.firstinspires.ftc.teamcode.Main.Utils.HeadingStorage;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Autonomous(name = "9.3 RED Auto", group = "Autonomous")
@@ -24,6 +25,7 @@ public class RAuto extends OpMode {
     private int pathState; // Current autonomous path state (state machine)
     private Paths paths; // Paths defined in the Paths class
     private final ElapsedTime stateTimer = new ElapsedTime();
+    private final double INTAKE_SPEED = 0.5;
     private ArtifactSystem artifactSystem;
     int pulseCounter = 0;
     private final float outtakeTime = 2;
@@ -32,7 +34,7 @@ public class RAuto extends OpMode {
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
         artifactSystem = new ArtifactSystem(hardwareMap);
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(new Pose(56.9958041958042, 9.264335664335658, Math.toRadians(90)));
+        follower.setStartingPose(new Pose(86.6013986013986, 9.264335664335658, Math.toRadians(90)));
 
         paths = new Paths(follower); // Build paths
 
@@ -81,7 +83,7 @@ public class RAuto extends OpMode {
                             new BezierCurve(
                                     new Pose(91.636, 106.137),
                                     new Pose(85.952, 88.357),
-                                    new Pose(99.894, 84.185)
+                                    new Pose(83.983, 84.185)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(0))
 
@@ -89,7 +91,7 @@ public class RAuto extends OpMode {
 
             Path3 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(99.894, 84.185),
+                                    new Pose(83.983, 84.185),
 
                                     new Pose(128.291, 83.379)
                             )
@@ -111,7 +113,7 @@ public class RAuto extends OpMode {
                             new BezierCurve(
                                     new Pose(91.435, 105.936),
                                     new Pose(86.227, 87.234),
-                                    new Pose(98.685, 59.815)
+                                    new Pose(83.580, 59.413)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(0))
 
@@ -119,9 +121,9 @@ public class RAuto extends OpMode {
 
             Path6 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(98.685, 59.815),
+                                    new Pose(83.580, 59.413),
 
-                                    new Pose(132.722, 58.406)
+                                    new Pose(128.895, 59.614)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(0))
 
@@ -129,7 +131,7 @@ public class RAuto extends OpMode {
 
             Path7 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(132.722, 58.406),
+                                    new Pose(128.895, 59.614),
                                     new Pose(86.326, 87.698),
                                     new Pose(92.039, 105.734)
                             )
@@ -141,7 +143,7 @@ public class RAuto extends OpMode {
                             new BezierCurve(
                                     new Pose(92.039, 105.734),
                                     new Pose(85.421, 87.773),
-                                    new Pose(98.338, 35.733)
+                                    new Pose(84.442, 35.531)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(0))
 
@@ -149,9 +151,9 @@ public class RAuto extends OpMode {
 
             Path9 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(98.338, 35.733),
+                                    new Pose(84.442, 35.531),
 
-                                    new Pose(134.316, 35.049)
+                                    new Pose(129.483, 35.250)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(0))
 
@@ -159,7 +161,7 @@ public class RAuto extends OpMode {
 
             Path10 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(134.316, 35.049),
+                                    new Pose(129.483, 35.250),
                                     new Pose(85.589, 86.858),
                                     new Pose(91.674, 105.978)
                             )
@@ -180,15 +182,14 @@ public class RAuto extends OpMode {
 
             case 1:
                 if (!follower.isBusy()) {
-                    // End of path 1 - start outtake
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.OUTTAKE);
                     stateTimer.reset();
-                    pathState = 100; // Outtake sub-state
+                    pathState = 100;
                 }
                 break;
 
-            case 100: // Outtake after path 1
-                if (stateTimer.seconds() > outtakeTime) { // Outtake duration
+            case 100:
+                if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     follower.followPath(paths.Path2, true);
                     pathState = 2;
@@ -197,15 +198,17 @@ public class RAuto extends OpMode {
 
             case 2:
                 if (!follower.isBusy()) {
+                    follower.setMaxPower(INTAKE_SPEED);
                     follower.followPath(paths.Path3, true);
-                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE); // Intake during path 3
+                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE);
                     pathState = 3;
                 }
                 break;
 
             case 3:
                 if (!follower.isBusy()) {
-                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE); // Stop intake
+                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
+                    follower.setMaxPower(1);
                     follower.followPath(paths.Path4, true);
                     pathState = 4;
                 }
@@ -230,6 +233,7 @@ public class RAuto extends OpMode {
 
             case 5:
                 if (!follower.isBusy()) {
+                    follower.setMaxPower(INTAKE_SPEED);
                     follower.followPath(paths.Path6, true);
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE); // Intake during path 6
                     pathState = 6;
@@ -238,6 +242,7 @@ public class RAuto extends OpMode {
 
             case 6:
                 if (!follower.isBusy()) {
+                    follower.setMaxPower(1);
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     follower.followPath(paths.Path7, true);
                     pathState = 7;
@@ -263,6 +268,7 @@ public class RAuto extends OpMode {
 
             case 8:
                 if (!follower.isBusy()) {
+                    follower.setMaxPower(INTAKE_SPEED);
                     follower.followPath(paths.Path9, true);
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE); // Intake during path 9
                     pathState = 9;
@@ -271,6 +277,7 @@ public class RAuto extends OpMode {
 
             case 9:
                 if (!follower.isBusy()) {
+                    follower.setMaxPower(1);
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     follower.followPath(paths.Path10, true);
                     pathState = 10;
@@ -279,7 +286,6 @@ public class RAuto extends OpMode {
 
             case 10:
                 if (!follower.isBusy()) {
-                    // End of path 10 - final outtake
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.OUTTAKE);
                     stateTimer.reset();
                     pathState = 103;
@@ -300,6 +306,11 @@ public class RAuto extends OpMode {
         }
 
         return pathState;
+    }
+
+    @Override
+    public void stop() {
+        HeadingStorage.heading = follower.getHeading() + Math.toRadians(90);
     }
 }
     
