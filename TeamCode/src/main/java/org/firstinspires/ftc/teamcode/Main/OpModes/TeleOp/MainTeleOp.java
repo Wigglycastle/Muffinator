@@ -82,7 +82,7 @@ public class MainTeleOp extends LinearOpMode {
             DrivePowers gamepadPowers = Drivebase.ProcessInput(gamepadEx1);
             DrivePowers aprilPowers = null;
             if (gamepadEx1.getButton(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
-                aprilPowers = AprilSystem.CheckForTag(40, -1);
+                aprilPowers = AprilSystem.CheckForTag(30, -1);
             }
             if (aprilPowers != null) {
                 Drivebase.SetMotorPowers(aprilPowers);

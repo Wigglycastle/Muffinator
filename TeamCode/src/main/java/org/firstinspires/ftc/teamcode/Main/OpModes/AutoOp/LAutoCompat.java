@@ -72,7 +72,7 @@ public class LAutoCompat extends OpMode {
                                     new Pose(45.003, 125.128),
                                     new Pose(60.218, 121.645)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(-36), Math.toRadians(159))
+                    ).setLinearHeadingInterpolation(Math.toRadians(-39), Math.toRadians(161))
 
                     .build();
 
@@ -82,7 +82,7 @@ public class LAutoCompat extends OpMode {
                                     new Pose(63.395, 103.664),
                                     new Pose(60.218, 84.185)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(159), Math.toRadians(0))
+                    ).setLinearHeadingInterpolation(Math.toRadians(161), Math.toRadians(180))
 
                     .build();
 
@@ -92,7 +92,7 @@ public class LAutoCompat extends OpMode {
 
                                     new Pose(18.931, 83.983)
                             )
-                    ).setConstantHeadingInterpolation(Math.toRadians(0))
+                    ).setConstantHeadingInterpolation(Math.toRadians(180))
 
                     .build();
 
@@ -100,19 +100,19 @@ public class LAutoCompat extends OpMode {
                             new BezierCurve(
                                     new Pose(18.931, 83.983),
                                     new Pose(67.186, 85.886),
-                                    new Pose(60.017, 121.846)
+                                    new Pose(58.607, 121.443)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(159))
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(161))
 
                     .build();
 
             Path5 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(60.017, 121.846),
+                                    new Pose(58.607, 121.443),
                                     new Pose(56.420, 94.081),
                                     new Pose(60.017, 60.420)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(159), Math.toRadians(0))
+                    ).setLinearHeadingInterpolation(Math.toRadians(161), Math.toRadians(180))
 
                     .build();
 
@@ -122,7 +122,7 @@ public class LAutoCompat extends OpMode {
 
                                     new Pose(18.730, 59.815)
                             )
-                    ).setConstantHeadingInterpolation(Math.toRadians(0))
+                    ).setConstantHeadingInterpolation(Math.toRadians(180))
 
                     .build();
 
@@ -130,9 +130,9 @@ public class LAutoCompat extends OpMode {
                             new BezierCurve(
                                     new Pose(18.730, 59.815),
                                     new Pose(63.165, 66.350),
-                                    new Pose(60.218, 121.645)
+                                    new Pose(58.406, 121.846)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(159))
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(161))
 
                     .build();
         }
