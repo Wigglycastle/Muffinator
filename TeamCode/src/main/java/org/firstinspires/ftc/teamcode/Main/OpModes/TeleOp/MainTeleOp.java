@@ -81,8 +81,8 @@ public class MainTeleOp extends LinearOpMode {
             // Calculate wheel outputs
             DrivePowers gamepadPowers = Drivebase.ProcessInput(gamepadEx1);
             DrivePowers aprilPowers = null;
-            if (gamepadEx1.getButton(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
-                aprilPowers = AprilSystem.CheckForTag(72, -1);
+            if (gamepadEx1.getButton(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
+                aprilPowers = AprilSystem.CheckForTag(40, -1);
             }
             if (aprilPowers != null) {
                 Drivebase.SetMotorPowers(aprilPowers);

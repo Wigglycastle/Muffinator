@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 
-@TeleOp(name="Motor Test", group="Linear OpMode")
+//@TeleOp(name="Motor Test", group="Linear OpMode")
 public class MotorTester extends LinearOpMode {
     private DcMotor frontLeftDrive = null;
     private DcMotor backLeftDrive = null;

@@ -33,7 +33,7 @@ public class LAuto extends OpMode {
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
         artifactSystem = new ArtifactSystem(hardwareMap);
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(new Pose(56.9958041958042, 9.264335664335658, Math.toRadians(90)));
+        follower.setStartingPose(new Pose(57.5, 9.264335664335658, Math.toRadians(90)));
 
         paths = new Paths(follower); // Build paths
 
@@ -70,9 +70,9 @@ public class LAuto extends OpMode {
         public Paths(Follower follower) {
             Path1 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(56.996, 9.264),
+                                    new Pose(57.500, 9.264),
                                     new Pose(57.691, 70.952),
-                                    new Pose(56.190, 98.283)
+                                    new Pose(53.975, 100.498)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(143))
 
@@ -80,9 +80,9 @@ public class LAuto extends OpMode {
 
             Path2 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(56.190, 98.283),
-                                    new Pose(59.770, 90.573),
-                                    new Pose(59.815, 83.983)
+                                    new Pose(53.975, 100.498),
+                                    new Pose(66.416, 87.350),
+                                    new Pose(59.815, 86.400)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(180))
 
@@ -90,9 +90,9 @@ public class LAuto extends OpMode {
 
             Path3 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(59.815, 83.983),
+                                    new Pose(59.815, 86.400),
 
-                                    new Pose(15.306, 83.983)
+                                    new Pose(15.105, 85.997)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -100,9 +100,9 @@ public class LAuto extends OpMode {
 
             Path4 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(15.306, 83.983),
+                                    new Pose(15.105, 85.997),
                                     new Pose(53.289, 82.664),
-                                    new Pose(56.190, 98.081)
+                                    new Pose(53.975, 100.699)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(143))
 
@@ -110,9 +110,9 @@ public class LAuto extends OpMode {
 
             Path5 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(56.190, 98.081),
+                                    new Pose(53.975, 100.699),
                                     new Pose(63.469, 91.262),
-                                    new Pose(59.211, 60.017)
+                                    new Pose(59.211, 61.024)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(180))
 
@@ -120,9 +120,9 @@ public class LAuto extends OpMode {
 
             Path6 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(59.211, 60.017),
+                                    new Pose(59.211, 61.024),
 
-                                    new Pose(13.091, 60.017)
+                                    new Pose(13.091, 61.024)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -130,9 +130,9 @@ public class LAuto extends OpMode {
 
             Path7 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(13.091, 60.017),
+                                    new Pose(13.091, 61.024),
                                     new Pose(54.102, 70.579),
-                                    new Pose(56.392, 98.081)
+                                    new Pose(53.773, 100.297)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(143))
 
@@ -140,9 +140,9 @@ public class LAuto extends OpMode {
 
             Path8 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(56.392, 98.081),
+                                    new Pose(53.773, 100.297),
                                     new Pose(63.871, 83.946),
-                                    new Pose(59.267, 35.733)
+                                    new Pose(59.267, 37.143)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(180))
 
@@ -150,9 +150,9 @@ public class LAuto extends OpMode {
 
             Path9 = follower.pathBuilder().addPath(
                             new BezierLine(
-                                    new Pose(59.267, 35.733),
+                                    new Pose(59.267, 37.143),
 
-                                    new Pose(13.074, 35.733)
+                                    new Pose(13.276, 37.344)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -160,9 +160,9 @@ public class LAuto extends OpMode {
 
             Path10 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(13.074, 35.733),
+                                    new Pose(13.276, 37.344),
                                     new Pose(48.330, 63.898),
-                                    new Pose(56.631, 98.123)
+                                    new Pose(54.013, 100.540)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(143))
 
@@ -234,7 +234,7 @@ public class LAuto extends OpMode {
                 if (!follower.isBusy()) {
                     follower.setMaxPower(INTAKE_SPEED);
                     follower.followPath(paths.Path6, true);
-                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE); // Intake during path 6
+                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE);
                     pathState = 6;
                 }
                 break;
@@ -242,7 +242,7 @@ public class LAuto extends OpMode {
             case 6:
                 if (!follower.isBusy()) {
                     follower.setMaxPower(1);
-                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
+                    //artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE); TODO: Disabled for consistency
                     follower.followPath(paths.Path7, true);
                     pathState = 7;
                 }
