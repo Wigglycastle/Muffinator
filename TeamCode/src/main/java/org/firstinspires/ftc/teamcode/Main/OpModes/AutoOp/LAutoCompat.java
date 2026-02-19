@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
 import org.firstinspires.ftc.teamcode.Main.Utils.AutoStorage;
+import org.firstinspires.ftc.teamcode.Main.Utils.Drawing;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Autonomous(name = "6.3 BLUE Auto", group = "Autonomous")
@@ -50,6 +51,7 @@ public class LAutoCompat extends OpMode {
         follower.update(); // Update Pedro Pathing
         pathState = autonomousPathUpdate(); // Update autonomous state machine
         artifactSystem.Update();
+        Drawing.drawDebug(follower);
         // Log values to Panels and Driver Station
         panelsTelemetry.debug("Path State", pathState);
         panelsTelemetry.debug("X", follower.getPose().getX());
