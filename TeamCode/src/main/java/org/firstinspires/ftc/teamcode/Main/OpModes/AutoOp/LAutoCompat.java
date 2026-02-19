@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
 import org.firstinspires.ftc.teamcode.Main.Utils.HeadingStorage;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "6.3 LEFT Auto", group = "Autonomous")
+@Autonomous(name = "6.3 BLUE Auto", group = "Autonomous")
 @Configurable // Panels
 public class LAutoCompat extends OpMode {
     private TelemetryManager panelsTelemetry; // Panels Telemetry instance
