@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.Drivebase;
 import org.firstinspires.ftc.teamcode.Main.Utils.DrivePowers;
 @Configurable
-@Autonomous(name="AUTO-GOTO April Tag and Launch", group="Linear OpMode")
+//@Autonomous(name="AUTO-GOTO April Tag and Launch", group="Linear OpMode")
 public class LaunchToAprilTag extends LinearOpMode {
     public static int targetAprilTag = 20;
     //init

@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Main.Subsystems.AprilSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.Drivebase;
 
-@Autonomous(name="AUTO-Foreward Launch", group="Linear OpMode")
+@Autonomous(name="AUTO-Forward Launch", group="Linear OpMode")
 public class Launch extends LinearOpMode {
     //init
     @Override
