@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Main.Utils.DrivePowers;
-import org.firstinspires.ftc.teamcode.Main.Utils.HeadingStorage;
+import org.firstinspires.ftc.teamcode.Main.Utils.AutoStorage;
 
 
 public class Drivebase {
@@ -38,7 +38,7 @@ public class Drivebase {
         // For heading
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         pinpoint.recalibrateIMU();
-        pinpoint.setHeading(HeadingStorage.heading, AngleUnit.RADIANS);
+        pinpoint.setHeading(AutoStorage.heading, AngleUnit.RADIANS);
         imu = hardwareMap.get(IMU.class, "imu");
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
         RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.UP;

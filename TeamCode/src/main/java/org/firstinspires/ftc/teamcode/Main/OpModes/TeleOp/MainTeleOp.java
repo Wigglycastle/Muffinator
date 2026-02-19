@@ -12,6 +12,8 @@ import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.AprilSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
 import org.firstinspires.ftc.teamcode.Main.Subsystems.Drivebase;
+import org.firstinspires.ftc.teamcode.Main.Subsystems.LightingSystem;
+import org.firstinspires.ftc.teamcode.Main.Utils.AutoStorage;
 import org.firstinspires.ftc.teamcode.Main.Utils.DrivePowers;
 
 
@@ -43,13 +45,10 @@ public class MainTeleOp extends LinearOpMode {
         telemetry.setMsTransmissionInterval(100);
 
         // Start Lights
-        //LightingSystem.PreGameLights();
+        //LightingSystem.SetLights(AutoStorage.color);
 
         // Go time
         waitForStart();
-
-        // Change Lights
-        //LightingSystem.MidGameLights();
 
         while (opModeIsActive()) {
             // Read controllers

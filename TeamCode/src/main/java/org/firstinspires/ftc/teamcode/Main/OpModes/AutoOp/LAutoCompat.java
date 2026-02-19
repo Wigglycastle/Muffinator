@@ -9,12 +9,13 @@ import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
-import org.firstinspires.ftc.teamcode.Main.Utils.HeadingStorage;
+import org.firstinspires.ftc.teamcode.Main.Utils.AutoStorage;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Autonomous(name = "6.3 BLUE Auto", group = "Autonomous")
@@ -31,13 +32,14 @@ public class LAutoCompat extends OpMode {
     private final float outtakeTime = 2;
     @Override
     public void init() {
+        //LightingSystem LightingSystem = new LightingSystem(hardwareMap);
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
         artifactSystem = new ArtifactSystem(hardwareMap);
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(new Pose(24.16783216783217, 128.29090909090908, Math.toRadians(-36)));
 
         paths = new Paths(follower); // Build paths
-
+        //LightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.GREEN);
         panelsTelemetry.debug("Status", "Initialized");
         panelsTelemetry.update(telemetry);
         pathState = 0;
@@ -243,7 +245,8 @@ public class LAutoCompat extends OpMode {
 
     @Override
     public void stop() {
-        HeadingStorage.heading = follower.getHeading() + Math.toRadians(90);
+        AutoStorage.heading = follower.getHeading() + Math.toRadians(90);
+        AutoStorage.color = RevBlinkinLedDriver.BlinkinPattern.BLUE;
     }
 }
     
