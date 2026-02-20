@@ -27,6 +27,7 @@ public class RAutoCompat extends OpMode {
     public Follower follower; // Pedro Pathing follower instance
     private int pathState; // Current autonomous path state (state machine)
     private Paths paths; // Paths defined in the Paths class
+    private LightingSystem lightingSystem;
     private final ElapsedTime stateTimer = new ElapsedTime();
     private final double INTAKE_SPEED = 0.5;
     private ArtifactSystem artifactSystem;
@@ -34,17 +35,22 @@ public class RAutoCompat extends OpMode {
     private final float outtakeTime = 2;
     @Override
     public void init() {
-        LightingSystem LightingSystem = new LightingSystem(hardwareMap);
+        lightingSystem = new LightingSystem(hardwareMap);
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
         artifactSystem = new ArtifactSystem(hardwareMap);
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(new Pose(119.83216783216784, 127.68671328671326, Math.toRadians(-144)));
 
         paths = new Paths(follower); // Build paths
-        LightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+        lightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.GREEN);
         panelsTelemetry.debug("Status", "Initialized");
         panelsTelemetry.update(telemetry);
         pathState = 0;
+    }
+
+    @Override
+    public void start() {
+        lightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.HOT_PINK);
     }
 
     @Override
