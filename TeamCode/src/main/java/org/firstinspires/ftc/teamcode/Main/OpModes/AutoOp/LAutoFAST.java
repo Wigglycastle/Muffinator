@@ -30,8 +30,7 @@ public class LAutoFAST extends OpMode {
     private final ElapsedTime stateTimer = new ElapsedTime();
     private final double INTAKE_SPEED = 0.5;
     private ArtifactSystem artifactSystem;
-    int pulseCounter = 0;
-    private final float outtakeTime = 1;
+    private final double outtakeTime = 0.75;
     @Override
     public void init() {
         LightingSystem LightingSystem = new LightingSystem(hardwareMap);
