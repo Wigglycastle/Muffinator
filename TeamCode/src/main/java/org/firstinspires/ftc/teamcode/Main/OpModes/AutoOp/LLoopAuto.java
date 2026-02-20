@@ -6,6 +6,7 @@ import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
+import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
@@ -14,11 +15,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
+import org.firstinspires.ftc.teamcode.Main.Subsystems.LightingSystem;
 import org.firstinspires.ftc.teamcode.Main.Utils.AutoStorage;
 import org.firstinspires.ftc.teamcode.Main.Utils.Drawing;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "Looping RED Auto", group = "Autonomous")
+@Autonomous(name = "Looping LEFT Auto", group = "Autonomous")
 @Configurable // Panels
 public class LLoopAuto extends OpMode {
     private TelemetryManager panelsTelemetry; // Panels Telemetry instance
@@ -32,14 +34,14 @@ public class LLoopAuto extends OpMode {
     private final float outtakeTime = 2;
     @Override
     public void init() {
-        //LightingSystem LightingSystem = new LightingSystem(hardwareMap);
+        LightingSystem LightingSystem = new LightingSystem(hardwareMap);
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
         artifactSystem = new ArtifactSystem(hardwareMap);
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(new Pose(86.6013986013986, 9.264335664335658, Math.toRadians(90)));
+        follower.setStartingPose(new Pose(56.9958041958042, 9.264335664335658, Math.toRadians(90)));
 
         paths = new Paths(follower); // Build paths
-        //LightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+        LightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.GREEN);
         panelsTelemetry.debug("Status", "Initialized");
         panelsTelemetry.update(telemetry);
         pathState = 0;
@@ -61,7 +63,9 @@ public class LLoopAuto extends OpMode {
 
     public static class Paths {
         public PathChain Path1;
+        public PathChain Path4;
         public PathChain Path2;
+        public PathChain Path5;
         public PathChain Path3;
 
         public Paths(Follower follower) {
@@ -75,23 +79,43 @@ public class LLoopAuto extends OpMode {
 
                     .build();
 
-            Path2 = follower.pathBuilder().addPath(
+            Path4 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(56.190, 98.283),
-                                    new Pose(37.818, 74.662),
-                                    new Pose(12.487, 60.017)
+                                    new Pose(46.084, 69.101),
+                                    new Pose(22.657, 69.684)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(132))
+                    ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(180))
+
+                    .build();
+
+            Path2 = follower.pathBuilder().addPath(
+                            new BezierCurve(
+                                    new Pose(22.657, 69.684),
+                                    new Pose(23.720, 56.939),
+                                    new Pose(11.883, 44.308)
+                            )
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(100))
+
+                    .build();
+
+            Path5 = follower.pathBuilder().addPath(
+                            new BezierLine(
+                                    new Pose(11.883, 44.308),
+
+                                    new Pose(11.782, 56.190)
+                            )
+                    ).setLinearHeadingInterpolation(Math.toRadians(100), Math.toRadians(90))
 
                     .build();
 
             Path3 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(12.487, 60.017),
-                                    new Pose(43.582, 72.094),
+                                    new Pose(11.782, 56.190),
+                                    new Pose(34.922, 64.642),
                                     new Pose(56.190, 98.283)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(132), Math.toRadians(143))
+                    ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(143))
 
                     .build();
         }
@@ -117,22 +141,28 @@ public class LLoopAuto extends OpMode {
             case 100:
                 if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
-                    follower.followPath(paths.Path2, true);
+                    follower.followPath(paths.Path4, true);
                     pathState = 2;
                 }
                 break;
 
             case 2:
                 if (!follower.isBusy()) {
+                    follower.followPath(paths.Path2, true);
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE);
-                    stateTimer.reset();
-                    pathState = 200;
+                    pathState = 3;
                 }
                 break;
 
-            case 200:
-                if (stateTimer.seconds() > 3) {
-                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
+            case 3:
+                if (!follower.isBusy()) {
+                    follower.followPath(paths.Path5, true);
+                    pathState = 4;
+                }
+                break;
+
+            case 4:
+                if (!follower.isBusy()) {
                     follower.followPath(paths.Path3, true);
                     pathState = 1;
                 }

@@ -34,14 +34,14 @@ public class RAutoCompat extends OpMode {
     private final float outtakeTime = 2;
     @Override
     public void init() {
-        //LightingSystem LightingSystem = new LightingSystem(hardwareMap);
+        LightingSystem LightingSystem = new LightingSystem(hardwareMap);
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
         artifactSystem = new ArtifactSystem(hardwareMap);
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(new Pose(119.83216783216784, 127.68671328671326, Math.toRadians(-144)));
 
         paths = new Paths(follower); // Build paths
-        //LightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+        LightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.GREEN);
         panelsTelemetry.debug("Status", "Initialized");
         panelsTelemetry.update(telemetry);
         pathState = 0;

@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem.Arti
 
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
@@ -38,14 +39,14 @@ public class MainTeleOp extends LinearOpMode {
         // Create the subsystems
         Drivebase Drivebase = new Drivebase(hardwareMap);
         ArtifactSystem ArtifactSystem = new ArtifactSystem(hardwareMap);
-        //LightingSystem LightingSystem = new LightingSystem(hardwareMap);
+        LightingSystem LightingSystem = new LightingSystem(hardwareMap);
         AprilSystem AprilSystem = new AprilSystem(hardwareMap, telemetry);
 
         // Configure telemetry
         telemetry.setMsTransmissionInterval(100);
 
-        // Start Lights
-        //LightingSystem.SetLights(AutoStorage.color);
+        //Start Lights
+        LightingSystem.SetLights(AutoStorage.color);
 
         // Go time
         waitForStart();
@@ -85,8 +86,10 @@ public class MainTeleOp extends LinearOpMode {
             }
             if (aprilPowers != null) {
                 Drivebase.SetMotorPowers(aprilPowers);
+                LightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.GOLD);
             } else {
                 Drivebase.SetMotorPowers(gamepadPowers);
+                LightingSystem.SetLights(AutoStorage.color);
             }
 
             // Create telemetry

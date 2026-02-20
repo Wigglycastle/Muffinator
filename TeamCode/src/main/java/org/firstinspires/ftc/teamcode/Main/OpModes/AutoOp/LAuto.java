@@ -8,6 +8,7 @@ import com.bylazar.telemetry.TelemetryManager;
 import com.bylazar.telemetry.PanelsTelemetry;
 
 import org.firstinspires.ftc.teamcode.Main.Subsystems.ArtifactSystem;
+import org.firstinspires.ftc.teamcode.Main.Subsystems.LightingSystem;
 import org.firstinspires.ftc.teamcode.Main.Utils.AutoStorage;
 import org.firstinspires.ftc.teamcode.Main.Utils.Drawing;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
@@ -32,14 +33,14 @@ public class LAuto extends OpMode {
     private final float outtakeTime = 2;
     @Override
     public void init() {
-        //LightingSystem LightingSystem = new LightingSystem(hardwareMap);
+        LightingSystem LightingSystem = new LightingSystem(hardwareMap);
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
         artifactSystem = new ArtifactSystem(hardwareMap);
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(new Pose(57.5, 9.264335664335658, Math.toRadians(90)));
 
         paths = new Paths(follower); // Build paths
-        //LightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+        LightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.GREEN);
         panelsTelemetry.debug("Status", "Initialized");
         panelsTelemetry.update(telemetry);
         pathState = 0;
