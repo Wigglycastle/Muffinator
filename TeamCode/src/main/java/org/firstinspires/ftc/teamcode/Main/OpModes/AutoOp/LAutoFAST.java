@@ -38,7 +38,7 @@ public class LAutoFAST extends OpMode {
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
         artifactSystem = new ArtifactSystem(hardwareMap);
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(new Pose(57.5, 9.264335664335658, Math.toRadians(90)));
+        follower.setStartingPose(new Pose(23.563636363636363, 127.28391608391608, Math.toRadians(143)));
 
         paths = new Paths(follower); // Build paths
         LightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.GREEN);
@@ -75,11 +75,11 @@ public class LAutoFAST extends OpMode {
         public Paths(Follower follower) {
             Path1 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(56.996, 9.264),
-                                    new Pose(57.691, 70.952),
+                                    new Pose(23.564, 127.284),
+                                    new Pose(47.733, 103.881),
                                     new Pose(56.190, 98.283)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(143))
+                    ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(143))
 
                     .build();
 
@@ -136,7 +136,7 @@ public class LAutoFAST extends OpMode {
             Path7 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(18.987, 36.136),
-                                    new Pose(67.948, 42.384),
+                                    new Pose(49.240, 50.201),
                                     new Pose(56.631, 98.123)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(143))
@@ -146,7 +146,7 @@ public class LAutoFAST extends OpMode {
             Path8 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(56.631, 98.123),
-                                    new Pose(9.611, 54.986),
+                                    new Pose(9.297, 45.602),
                                     new Pose(9.667, 9.869)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(-90))
