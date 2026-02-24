@@ -94,8 +94,8 @@ public class ArtifactSystem {
             case OUTTAKE:
                 intakePower = 1;
                 indexPower = .8;
-                leftPower = -0.5;
-                rightPower = 0.5;
+                leftPower = -1;
+                rightPower = 1;
                 intakeServoPower = 1;
                 break;
             case FLUSH:
