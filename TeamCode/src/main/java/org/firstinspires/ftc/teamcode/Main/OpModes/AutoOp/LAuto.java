@@ -186,7 +186,7 @@ public class LAuto extends OpMode {
 
             case 0:
                 follower.followPath(paths.Path1, true);
-                artifactSystem.setFlywheel(true); // Rev flywheel during path 1
+                artifactSystem.setFlywheel(true);
                 pathState = 1;
                 break;
 
@@ -268,7 +268,7 @@ public class LAuto extends OpMode {
                 }
                 break;
 
-            case 102: // Outtake after path 7
+            case 102:
                 if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     follower.followPath(paths.Path8, true);
@@ -280,7 +280,7 @@ public class LAuto extends OpMode {
                 if (!follower.isBusy()) {
                     follower.setMaxPower(INTAKE_SPEED);
                     follower.followPath(paths.Path9, true);
-                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE); // Intake during path 9
+                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE);
                     pathState = 9;
                 }
                 break;
@@ -302,16 +302,15 @@ public class LAuto extends OpMode {
                 }
                 break;
 
-            case 103: // Final outtake
+            case 103:
                 if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
-                    artifactSystem.setFlywheel(false); // Stop flywheel when done
-                    pathState = 11; // Done
+                    artifactSystem.setFlywheel(false);
+                    pathState = 11;
                 }
                 break;
 
             case 11:
-                // Autonomous complete
                 break;
         }
 

@@ -213,7 +213,7 @@ public class LAutoCompat extends OpMode {
                 if (!follower.isBusy()) {
                     follower.setMaxPower(INTAKE_SPEED);
                     follower.followPath(paths.Path6, true);
-                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE); // Intake during path 6
+                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE);
                     pathState = 6;
                 }
                 break;
@@ -229,7 +229,6 @@ public class LAutoCompat extends OpMode {
 
             case 7:
                 if (!follower.isBusy()) {
-                    // End of path 7 - outtake
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.OUTTAKE);
                     stateTimer.reset();
                     pathState = 102;
@@ -239,13 +238,12 @@ public class LAutoCompat extends OpMode {
             case 102: // Final outtake
                 if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
-                    artifactSystem.setFlywheel(false); // Stop flywheel when done
-                    pathState = 8; // Done
+                    artifactSystem.setFlywheel(false);
+                    pathState = 8;
                 }
                 break;
 
             case 8:
-                // Autonomous complete
                 break;
         }
 

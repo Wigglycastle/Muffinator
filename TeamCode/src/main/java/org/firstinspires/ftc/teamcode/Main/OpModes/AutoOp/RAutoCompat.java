@@ -155,7 +155,7 @@ public class RAutoCompat extends OpMode {
 
             case 0:
                 follower.followPath(paths.Path1, true);
-                artifactSystem.setFlywheel(true); // Rev flywheel during path 1
+                artifactSystem.setFlywheel(true);
                 pathState = 1;
                 break;
 
@@ -214,7 +214,7 @@ public class RAutoCompat extends OpMode {
                 if (!follower.isBusy()) {
                     follower.setMaxPower(INTAKE_SPEED);
                     follower.followPath(paths.Path6, true);
-                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE); // Intake during path 6
+                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE);
                     pathState = 6;
                 }
                 break;
@@ -230,23 +230,21 @@ public class RAutoCompat extends OpMode {
 
             case 7:
                 if (!follower.isBusy()) {
-                    // End of path 7 - outtake
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.OUTTAKE);
                     stateTimer.reset();
                     pathState = 102;
                 }
                 break;
 
-            case 102: // Final outtake
+            case 102:
                 if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
-                    artifactSystem.setFlywheel(false); // Stop flywheel when done
-                    pathState = 8; // Done
+                    artifactSystem.setFlywheel(false);
+                    pathState = 8;
                 }
                 break;
 
             case 8:
-                // Autonomous complete
                 break;
         }
 

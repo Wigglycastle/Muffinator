@@ -187,7 +187,7 @@ public class RAuto extends OpMode {
 
             case 0:
                 follower.followPath(paths.Path1, true);
-                artifactSystem.setFlywheel(true); // Rev flywheel during path 1
+                artifactSystem.setFlywheel(true);
                 pathState = 1;
                 break;
 
@@ -227,14 +227,13 @@ public class RAuto extends OpMode {
 
             case 4:
                 if (!follower.isBusy()) {
-                    // End of path 4 - outtake
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.OUTTAKE);
                     stateTimer.reset();
                     pathState = 101;
                 }
                 break;
 
-            case 101: // Outtake after path 4
+            case 101:
                 if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     follower.followPath(paths.Path5, true);
@@ -246,7 +245,7 @@ public class RAuto extends OpMode {
                 if (!follower.isBusy()) {
                     follower.setMaxPower(INTAKE_SPEED);
                     follower.followPath(paths.Path6, true);
-                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE); // Intake during path 6
+                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE);
                     pathState = 6;
                 }
                 break;
@@ -262,14 +261,13 @@ public class RAuto extends OpMode {
 
             case 7:
                 if (!follower.isBusy()) {
-                    // End of path 7 - outtake
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.OUTTAKE);
                     stateTimer.reset();
                     pathState = 102;
                 }
                 break;
 
-            case 102: // Outtake after path 7
+            case 102:
                 if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
                     follower.followPath(paths.Path8, true);
@@ -281,7 +279,7 @@ public class RAuto extends OpMode {
                 if (!follower.isBusy()) {
                     follower.setMaxPower(INTAKE_SPEED);
                     follower.followPath(paths.Path9, true);
-                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE); // Intake during path 9
+                    artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.INTAKE);
                     pathState = 9;
                 }
                 break;
@@ -303,16 +301,15 @@ public class RAuto extends OpMode {
                 }
                 break;
 
-            case 103: // Final outtake
+            case 103:
                 if (stateTimer.seconds() > outtakeTime) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.IDLE);
-                    artifactSystem.setFlywheel(false); // Stop flywheel when done
-                    pathState = 11; // Done
+                    artifactSystem.setFlywheel(false);
+                    pathState = 11;
                 }
                 break;
 
             case 11:
-                // Autonomous complete
                 break;
         }
 
