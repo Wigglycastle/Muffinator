@@ -37,7 +37,7 @@ public class LAutoFast extends OpMode {
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
         artifactSystem = new ArtifactSystem(hardwareMap);
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(new Pose(120.43636363636362, 127.48531468531466, Math.toRadians(36)));
+        follower.setStartingPose(new Pose(24.369230769230754, 128.29090909090908, Math.toRadians(144)));
 
         paths = new Paths(follower); // Build paths
         lightingSystem.SetLights(RevBlinkinLedDriver.BlinkinPattern.GREEN);
@@ -80,7 +80,7 @@ public class LAutoFast extends OpMode {
             Path1 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(24.369, 128.291),
-                                    new Pose(37.175, 106.129),
+                                    new Pose(35.362, 109.955),
                                     new Pose(51.155, 106.741)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(144), Math.toRadians(144))
@@ -90,8 +90,8 @@ public class LAutoFast extends OpMode {
             Path2 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(51.155, 106.741),
-                                    new Pose(44.647, 81.428),
-                                    new Pose(18.529, 83.782)
+                                    new Pose(47.265, 81.026),
+                                    new Pose(20.543, 84.386)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -99,7 +99,7 @@ public class LAutoFast extends OpMode {
 
             Path3 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(18.529, 83.782),
+                                    new Pose(20.543, 84.386),
                                     new Pose(43.269, 108.419),
                                     new Pose(51.759, 106.943)
                             )
@@ -110,8 +110,8 @@ public class LAutoFast extends OpMode {
             Path4 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(51.759, 106.943),
-                                    new Pose(56.176, 56.738),
-                                    new Pose(19.133, 60.017)
+                                    new Pose(58.794, 55.529),
+                                    new Pose(21.751, 60.017)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -119,7 +119,7 @@ public class LAutoFast extends OpMode {
 
             Path5 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(19.133, 60.017),
+                                    new Pose(21.751, 60.017),
                                     new Pose(46.835, 86.508),
                                     new Pose(51.155, 106.943)
                             )
@@ -130,8 +130,8 @@ public class LAutoFast extends OpMode {
             Path6 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(51.155, 106.943),
-                                    new Pose(59.412, 35.124),
-                                    new Pose(43.094, 34.893),
+                                    new Pose(58.606, 34.923),
+                                    new Pose(48.935, 34.893),
                                     new Pose(13.952, 35.733)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
@@ -151,8 +151,8 @@ public class LAutoFast extends OpMode {
             Path8 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(51.193, 106.985),
-                                    new Pose(14.582, 60.700),
-                                    new Pose(7.049, 13.897)
+                                    new Pose(6.929, 50.630),
+                                    new Pose(8.459, 13.292)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(-90))
 
@@ -160,7 +160,7 @@ public class LAutoFast extends OpMode {
 
             Path9 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(7.049, 13.897),
+                                    new Pose(8.459, 13.292),
                                     new Pose(33.566, 81.136),
                                     new Pose(51.280, 106.951)
                             )
