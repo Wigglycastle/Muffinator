@@ -76,7 +76,6 @@ public class LAutoFast extends OpMode {
         public PathChain Path7;
         public PathChain Path8;
         public PathChain Path9;
-        public PathChain Path10;
 
         public Paths(Follower follower) {
             Path1 = follower.pathBuilder().addPath(
@@ -93,7 +92,7 @@ public class LAutoFast extends OpMode {
                             new BezierCurve(
                                     new Pose(51.155, 106.741),
                                     new Pose(47.265, 81.026),
-                                    new Pose(20.140, 84.185)
+                                    new Pose(20.744, 84.185)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -101,8 +100,8 @@ public class LAutoFast extends OpMode {
 
             Path3 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(20.140, 84.185),
-                                    new Pose(43.269, 108.419),
+                                    new Pose(20.744, 84.185),
+                                    new Pose(39.241, 99.356),
                                     new Pose(51.759, 106.943)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(144))
@@ -112,8 +111,9 @@ public class LAutoFast extends OpMode {
             Path4 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(51.759, 106.943),
-                                    new Pose(58.794, 55.529),
-                                    new Pose(19.938, 60.017)
+                                    new Pose(51.342, 55.126),
+                                    new Pose(47.502, 59.729),
+                                    new Pose(20.744, 60.218)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -121,8 +121,8 @@ public class LAutoFast extends OpMode {
 
             Path5 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(19.938, 60.017),
-                                    new Pose(46.835, 86.508),
+                                    new Pose(20.744, 60.218),
+                                    new Pose(42.405, 58.514),
                                     new Pose(51.155, 106.943)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(144))
@@ -134,7 +134,7 @@ public class LAutoFast extends OpMode {
                                     new Pose(51.155, 106.943),
                                     new Pose(60.822, 34.923),
                                     new Pose(48.935, 34.893),
-                                    new Pose(18.585, 35.733)
+                                    new Pose(19.189, 35.733)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -142,8 +142,8 @@ public class LAutoFast extends OpMode {
 
             Path7 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(18.585, 35.733),
-                                    new Pose(36.179, 54.928),
+                                    new Pose(19.189, 35.733),
+                                    new Pose(36.984, 53.518),
                                     new Pose(51.193, 106.985)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(144))
@@ -153,9 +153,9 @@ public class LAutoFast extends OpMode {
             Path8 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(51.193, 106.985),
-                                    new Pose(4.512, 30.289),
-                                    new Pose(10.679, 49.881),
-                                    new Pose(9.264, 10.473)
+                                    new Pose(10.151, 15.989),
+                                    new Pose(10.478, 55.319),
+                                    new Pose(10.070, 13.091)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(-90))
 
@@ -163,21 +163,11 @@ public class LAutoFast extends OpMode {
 
             Path9 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(9.264, 10.473),
+                                    new Pose(10.070, 13.091),
                                     new Pose(33.365, 62.205),
-                                    new Pose(42.015, 86.006)
+                                    new Pose(52.364, 106.540)
                             )
-                    ).setConstantHeadingInterpolation(Math.toRadians(-90))
-
-                    .build();
-
-            Path10 = follower.pathBuilder().addPath(
-                            new BezierLine(
-                                    new Pose(42.015, 86.006),
-
-                                    new Pose(51.214, 106.512)
-                            )
-                    ).setConstantHeadingInterpolation(Math.toRadians(144))
+                    ).setLinearHeadingInterpolation(Math.toRadians(-90), Math.toRadians(144))
 
                     .build();
         }
@@ -286,13 +276,6 @@ public class LAutoFast extends OpMode {
 
             case 9:
                 if (!follower.isBusy()) {
-                    follower.followPath(paths.Path10, true);
-                    pathState = 10;
-                }
-                break;
-
-            case 10:
-                if (!follower.isBusy()) {
                     artifactSystem.setState(ArtifactSystem.ArtifactSystemStates.OUTTAKE);
                     stateTimer.reset();
                     pathState = 104;
@@ -307,7 +290,7 @@ public class LAutoFast extends OpMode {
                 }
                 break;
 
-            case 11:
+            case 10:
                 break;
         }
 

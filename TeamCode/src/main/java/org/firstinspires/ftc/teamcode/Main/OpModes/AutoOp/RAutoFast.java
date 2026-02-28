@@ -91,7 +91,7 @@ public class RAutoFast extends OpMode {
                             new BezierCurve(
                                     new Pose(91.032, 105.533),
                                     new Pose(84.185, 81.768),
-                                    new Pose(125.270, 83.379)
+                                    new Pose(123.256, 83.379)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(1))
 
@@ -99,7 +99,7 @@ public class RAutoFast extends OpMode {
 
             Path3 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(125.270, 83.379),
+                                    new Pose(123.256, 83.379),
                                     new Pose(110.915, 91.730),
                                     new Pose(91.636, 105.331)
                             )
@@ -110,8 +110,9 @@ public class RAutoFast extends OpMode {
             Path4 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(91.636, 105.331),
-                                    new Pose(93.379, 55.234),
-                                    new Pose(124.666, 59.413)
+                                    new Pose(99.622, 58.658),
+                                    new Pose(88.313, 58.815),
+                                    new Pose(123.659, 59.413)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(1))
 
@@ -119,8 +120,8 @@ public class RAutoFast extends OpMode {
 
             Path5 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(124.666, 59.413),
-                                    new Pose(107.463, 78.032),
+                                    new Pose(123.659, 59.413),
+                                    new Pose(102.226, 68.768),
                                     new Pose(91.435, 105.533)
                             )
                     ).setLinearHeadingInterpolation(Math.toRadians(1), Math.toRadians(36))
@@ -130,9 +131,9 @@ public class RAutoFast extends OpMode {
             Path6 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(91.435, 105.533),
-                                    new Pose(85.934, 35.722),
-                                    new Pose(90.456, 34.065),
-                                    new Pose(130.562, 35.129)
+                                    new Pose(85.732, 36.527),
+                                    new Pose(90.456, 35.072),
+                                    new Pose(127.541, 35.129)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(1))
 
@@ -140,7 +141,7 @@ public class RAutoFast extends OpMode {
 
             Path7 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(130.562, 35.129),
+                                    new Pose(127.541, 35.129),
                                     new Pose(108.558, 47.151),
                                     new Pose(91.473, 105.373)
                             )
@@ -151,8 +152,9 @@ public class RAutoFast extends OpMode {
             Path8 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(91.473, 105.373),
-                                    new Pose(138.192, 56.880),
-                                    new Pose(136.951, 16.716)
+                                    new Pose(134.768, 41.171),
+                                    new Pose(134.560, 33.683),
+                                    new Pose(134.534, 16.716)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(-90))
 
@@ -160,7 +162,7 @@ public class RAutoFast extends OpMode {
 
             Path9 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(136.951, 16.716),
+                                    new Pose(134.534, 16.716),
                                     new Pose(91.778, 61.445),
                                     new Pose(91.761, 105.340)
                             )
