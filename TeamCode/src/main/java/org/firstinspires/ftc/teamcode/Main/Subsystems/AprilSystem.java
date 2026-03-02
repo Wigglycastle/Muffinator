@@ -30,7 +30,7 @@ public class AprilSystem {
     final double MAX_AUTO_TURN  = 0.75;
     // Camera calibration
     private final int exposureMS = 5;   // Use low exposure time to reduce motion blur
-    private final int gain = 1000;
+    private final int gain = 2000;
     VisionPortal visionPortal;               // Used to manage the video source.
     AprilTagProcessor aprilTag;              // Used for managing the AprilTag detection process.
     AprilTagDetection desiredTag = null;     // Used to hold the data for a detected AprilTag

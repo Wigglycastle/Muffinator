@@ -133,7 +133,7 @@ public class RAutoFast extends OpMode {
                                     new Pose(91.435, 105.533),
                                     new Pose(85.732, 36.527),
                                     new Pose(90.456, 35.072),
-                                    new Pose(127.541, 35.129)
+                                    new Pose(126.333, 35.330)
                             )
                     ).setConstantHeadingInterpolation(Math.toRadians(1))
 
@@ -141,7 +141,7 @@ public class RAutoFast extends OpMode {
 
             Path7 = follower.pathBuilder().addPath(
                             new BezierCurve(
-                                    new Pose(127.541, 35.129),
+                                    new Pose(126.333, 35.330),
                                     new Pose(108.558, 47.151),
                                     new Pose(91.473, 105.373)
                             )
